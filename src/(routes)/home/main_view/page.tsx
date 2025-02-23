@@ -31,8 +31,8 @@ export default function Page() {
             <div className='fixed bottom-10 right-10 z-50'>
                 <AttendanceBtn />
             </div>
-            <div className='w-full pb-[10rem]'>
-                <div className='relative top-10 mx-auto max-w-screen-xl px-16 xl:px-20'>
+            <div className='w-full'>
+                <div className='px-auto mx-auto h-screen max-w-screen-xl pt-10 xl:px-20'>
                     <div className='relative top-3 grid w-full grid-cols-1 gap-10 lg:grid-cols-[auto_14rem] xl:gap-8'>
                         {/* 메인 사진 */}
                         <div className='relative hidden min-h-[30rem] w-full sm:flex'>
