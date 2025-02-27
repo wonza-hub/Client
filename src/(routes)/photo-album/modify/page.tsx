@@ -79,8 +79,8 @@ export default function Page() {
                     alert(errorMessage);
                     return;
                 }
-                if (isServerError(e) && e.response.data && e?.response?.data?.error.message) {
-                    errorMessage = e.response.data.error.message;
+                if (isServerError(e) && e.response.data && e?.response?.data?.message) {
+                    errorMessage = e.response.data.message;
                     alert(errorMessage);
                     return;
                 }
