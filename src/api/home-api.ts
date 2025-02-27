@@ -1,21 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { IAttdRanks, INewPost } from '../(routes)/home/type';
+import { IAttdRanks } from '../(routes)/home/type';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import isServerError from '../_errors/isServerError';
-
-// GET: 최근글 조회
-export const useGetNewPosts = () => {
-    return useQuery<INewPost[]>({
-        queryKey: ['recent-posts'],
-        queryFn: async () => {
-            const recentPostsURL = `/api/post/recent-posts`;
-            return await axios.get(recentPostsURL).then(res => {
-                return res.data.response.dtoList;
-            });
-        },
-        retry: 0,
-    });
-};
 
 // GET: 출석 순위 조회
 export const useGetAttendance = () => {

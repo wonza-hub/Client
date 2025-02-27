@@ -6,10 +6,9 @@ import RecentPostsBanner from './_components/RecentPostsBanner';
 import LinkBanner from './_components/LinkBanner';
 import AttendanceBanner from './_components/AttendanceBanner';
 import { IWeeklyAttdRank, IMonthlyAttdRank } from '../type';
-import { useGetAttendance, useGetNewPosts } from '../../../api/home-api';
+import { useGetAttendance } from '../../../api/home-api';
 
 export default function Page() {
-    const { data: recentPosts, isLoading: isNewPostsLoading, isError: isNewPostsError } = useGetNewPosts();
     const {
         data: { weeklyStatisticsDtoList: weeklyAttdRank = [], monthlyStatisticsDtoList: monthlyAttdRank = [] } = {},
         isLoading: isAttdRanksLoading,
@@ -42,16 +41,7 @@ export default function Page() {
                         <div className='px-auto	mx-auto flex select-none flex-col gap-4 sm:flex-row sm:gap-12 md:gap-24 lg:flex-col lg:gap-4'>
                             <div className='flex flex-col justify-between gap-4'>
                                 {/* 최신 글 배너 */}
-                                <article className='flex h-[14rem] w-[14rem] flex-col rounded-[0.5rem] border-2 border-secondary bg-white shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px]'>
-                                    <h1 className='m-[0.8rem] mb-[0.3rem] text-sm font-bold text-primary'>최신 글</h1>
-                                    {isNewPostsError ? (
-                                        <div className='relative top-[35%] text-center text-xs'>
-                                            최신 글을 불러오는데 실패했습니다.
-                                        </div>
-                                    ) : (
-                                        <RecentPostsBanner items={recentPosts} isLoading={isNewPostsLoading} />
-                                    )}
-                                </article>
+                                <RecentPostsBanner />
                                 {/* 로고 배너 */}
                                 <div className='h-[6rem] w-[14rem] overflow-hidden rounded-[0.5rem] bg-secondary p-2 shadow-[rgba(0,_0,_0,_0.24)_0px_3px_8px] lg:hidden'>
                                     <img
