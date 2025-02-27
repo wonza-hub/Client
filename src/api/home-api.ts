@@ -1,22 +1,6 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { IAttdRanks } from '../(routes)/home/type';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import isServerError from '../_errors/isServerError';
-
-// GET: 출석 순위 조회
-export const useGetAttendance = () => {
-    return useQuery<IAttdRanks>({
-        queryKey: ['attendance-statistics'],
-        queryFn: async () => {
-            const attendanceURL = `/api/attendance/statistics`;
-
-            return await axios.get(attendanceURL).then(res => {
-                return res.data.response;
-            });
-        },
-        retry: 0,
-    });
-};
 
 // POST: 출석 등록
 export function usePostMyAttendance() {
