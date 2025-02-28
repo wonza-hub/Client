@@ -32,7 +32,7 @@ export default function Footer() {
         new Content('족보 게시판', PAGE_ROUTE.EXAM),
     ];
 
-    const sns = [new Content('인스타그램', 'https://www.instagram.com/nestnet_/', '_assets/images/instagram.png')];
+    const sns = [new Content('인스타그램', 'https://www.instagram.com/nestnet_/', '_assets/images/instagram.webp')];
 
     const lifes = [new Content('공지사항', PAGE_ROUTE.NOTICE), new Content('자기 소개', PAGE_ROUTE.ABOUT_ME)];
 
@@ -104,7 +104,7 @@ export default function Footer() {
                     </div>
                     {/* 네스트넷 로고 */}
                     <div className='mx-auto my-10 flex w-fit flex-col items-center xl:mt-0'>
-                        <img className='w-[16rem]' src='_assets/images/nestnet-logo.png' alt='네스트넷 로고' />
+                        <img className='w-[16rem]' src='_assets/images/nestnet-logo.webp' alt='네스트넷 로고' />
                         <span className='mx-auto pr-3 text-[0.9rem] text-gray-500'>소프트웨어학부 1등 학술동아리</span>
                     </div>
                 </div>
