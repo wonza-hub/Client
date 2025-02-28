@@ -11,22 +11,22 @@ import useInterval from '../../../../_hooks/useInterval';
 const sliderItems: ILinkBannerItem[] = [
     {
         title: '연혁',
-        src: '_assets/images/history-bg.jpg',
+        src: '_assets/images/history-bg.webp',
         link: PAGE_ROUTE.HISTORY,
     },
     {
         title: '회칙',
-        src: '_assets/images/regulations-bg.jpg',
+        src: '_assets/images/regulations-bg.webp',
         link: PAGE_ROUTE.REGULATIONS,
     },
     {
         title: '지도교수',
-        src: '_assets/images/professor-bg.jpg',
+        src: '_assets/images/professor-bg.webp',
         link: PAGE_ROUTE.PROFESSOR,
     },
     {
         title: '임원',
-        src: '_assets/images/executives-bg.jpg',
+        src: '_assets/images/executives-bg.webp',
         link: PAGE_ROUTE.EXECUTIVES,
     },
 ];
