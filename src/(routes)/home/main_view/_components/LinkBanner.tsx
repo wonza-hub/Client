@@ -7,7 +7,7 @@ import { PAGE_ROUTE } from '../../../../_constants/constants';
 import { ILinkBannerItem } from '../../type';
 import useInterval from '../../../../_hooks/useInterval';
 
-// 배너 내 각 슬라이드 아이템
+// 배너 내 슬라이드 아이템
 const sliderItems: ILinkBannerItem[] = [
     {
         title: '연혁',
@@ -54,6 +54,7 @@ export default memo(function LinkBanner() {
     return (
         <div className='relative h-full w-full select-none'>
             <>
+                {/* 이미지 */}
                 {sliderItems.map((item, idx) => {
                     return (
                         <div key={idx}>
@@ -75,6 +76,7 @@ export default memo(function LinkBanner() {
                         </div>
                     );
                 })}
+                {/* 링크 */}
                 {sliderItems.map((item, idx) => {
                     return slideIdx === idx + 1 ? (
                         <Link
@@ -87,15 +89,16 @@ export default memo(function LinkBanner() {
                     ) : null;
                 })}
             </>
-            {/* 배너 양방향 이동 버튼 */}
+            {/* 좌우 전환 버튼 */}
             <span className='absolute top-1/2 my-auto flex -translate-y-1/2 flex-col justify-center'>
                 <SliderArrowBtn moveSlide={prevSlide} direction={'prev'} />
             </span>
             <span className='absolute right-0 top-1/2 my-auto flex -translate-y-1/2 flex-col justify-center'>
                 <SliderArrowBtn moveSlide={nextSlide} direction={'next'} />
             </span>
+            {/* 전환 인덱스 Dot */}
             <div className='absolute bottom-0 left-1/2 mb-1 flex -translate-x-1/2 flex-row'>
-                {sliderItems?.map((_, idx) => (
+                {Array.from({ length: sliderItems.length })?.map((_, idx) => (
                     <Dot
                         key={idx}
                         isActive={slideIdx === idx + 1 ? true : false}
