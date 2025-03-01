@@ -9,6 +9,7 @@ import { nanoid } from 'nanoid';
 import { IExistingFileDto, IUploadedFileDto } from '../types';
 import { UPLOAD_FILE_SIZE_MAX_LIMIT } from '../../../_constants/constants';
 import { resizeFile } from '../../../_utils/resizeFile';
+import { useFormContext, useWatch } from 'react-hook-form';
 
 const uploadSizeLimit = UPLOAD_FILE_SIZE_MAX_LIMIT * 1024 * 1024;
 
@@ -18,14 +19,15 @@ const isRejected = (input: PromiseSettledResult<unknown>): input is PromiseRejec
 const isFulfilled = <T,>(input: PromiseSettledResult<T>): input is PromiseFulfilledResult<T> =>
     input.status === 'fulfilled';
 
-interface FileInputProps {
-    files: (IExistingFileDto | IUploadedFileDto)[];
-    setFiles: React.Dispatch<React.SetStateAction<(IExistingFileDto | IUploadedFileDto)[]>>;
+interface IFileInputProps {
     existingFileIds?: number[];
     setExistingFileIds?: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
-export default memo(function FileInput({ files, setFiles, existingFileIds, setExistingFileIds }: FileInputProps) {
+export default memo(function FileInput({ existingFileIds, setExistingFileIds }: IFileInputProps) {
+    const { register, setValue } = useFormContext();
+    const watchedFiles = useWatch({ name: 'files', defaultValue: [] });
+
     const [compressing, setCompressing] = useState(false);
 
     // 파일 인풋 ref
@@ -33,7 +35,7 @@ export default memo(function FileInput({ files, setFiles, existingFileIds, setEx
     // 스크롤 이벤트 위한 가짜 ref
     const lastFileRef = useRef<HTMLDivElement>(null);
 
-    // 첨부 파일 추가
+    // HANDLER: 파일 업로드
     const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         setCompressing(true);
         const uploadedFiles = event.currentTarget.files;
@@ -65,7 +67,7 @@ export default memo(function FileInput({ files, setFiles, existingFileIds, setEx
             const failedFiles = results.filter(isRejected);
 
             setCompressing(false);
-            setFiles(prevFiles => [...prevFiles, ...successfulFiles]);
+            setValue('files', [...watchedFiles, ...successfulFiles]);
 
             if (failedFiles.length !== 0) {
                 // 실패한 파일에 대한 추가 처리
@@ -90,25 +92,30 @@ export default memo(function FileInput({ files, setFiles, existingFileIds, setEx
         }, 100);
     };
 
-    // 첨부 파일 삭제
+    // HANDLER: 파일 삭제
     const handleFileDelete = (targetFileId: number | string) => {
         // 파일 삭제시 기존 파일 아이디를 저장한 리스트에서 해당 파일 아이디를 삭제
         if (existingFileIds) {
             setExistingFileIds(existingFileIds.filter(id => id !== targetFileId));
         }
-        setFiles(files.filter(uploadedFile => uploadedFile.id !== targetFileId));
+
+        setValue(
+            'files',
+            watchedFiles.filter(uploadedFile => uploadedFile.id !== targetFileId),
+        );
     };
 
     return (
         <div className='flex h-full w-full flex-col items-center'>
             <input
+                {...register('files')}
                 id='uploadfiles'
                 type='file'
                 ref={fileInputRef}
                 // ref={register}
                 className={'hidden'}
                 onChange={handleFileChange}
-                accept='.gif, .jpg, .jpeg, .png'
+                accept='.jpg, .jpeg, .png .webp .avif'
                 multiple={true}
             />
             <div className='relative h-[85%] w-full overflow-hidden '>
@@ -120,7 +127,7 @@ export default memo(function FileInput({ files, setFiles, existingFileIds, setEx
                     </div>
                 ) : null}
                 <div className={'FilesContainer h-full w-full overflow-y-auto whitespace-nowrap'}>
-                    {files?.length === 0 && (
+                    {watchedFiles?.length === 0 && (
                         <div
                             className={
                                 'flex h-full w-full min-w-max flex-col items-center justify-center rounded-2xl border-2 border-dotted border-stone-600 bg-slate-200'
@@ -134,9 +141,9 @@ export default memo(function FileInput({ files, setFiles, existingFileIds, setEx
                         </div>
                     )}
 
-                    {files?.length !== 0 && (
+                    {watchedFiles?.length !== 0 && (
                         <>
-                            {files?.map((fileItem: IExistingFileDto | IUploadedFileDto) => (
+                            {watchedFiles?.map((fileItem: IExistingFileDto | IUploadedFileDto) => (
                                 <div
                                     key={fileItem.id}
                                     className={

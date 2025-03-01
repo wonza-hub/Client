@@ -1,31 +1,28 @@
-// COMPONENT: 앨범 작성 폼 컴포넌트 (작성 및 수정시 사용)
+// COMPONENT: 앨범 작성 폼 컴포넌트 (작성 및 수정 시 사용)
 import DescriptionInputs from './DescriptionInputs';
 import FileInput from './FileInput';
 import OvalButton from '../../../_components/button/OvalButton';
 import { Dispatch, SetStateAction } from 'react';
-import { IUploadedFileDto, IExistingFileDto, IPhotoAlbumDescriptionValues } from '../types';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import LoadingSpinner from '../../../_components/loadingSpinner/LoadingSpinner';
+import { IModifiedPhotoAlbumFormData, INewPhotoAlbumFormData } from '../types';
 
 interface IPhotoAlbumFormProps {
-    files: (IExistingFileDto | IUploadedFileDto)[];
-    setFiles: Dispatch<SetStateAction<(IExistingFileDto | IUploadedFileDto)[]>>;
-    onSubmit: SubmitHandler<IPhotoAlbumDescriptionValues>;
+    onSubmit: SubmitHandler<INewPhotoAlbumFormData | IModifiedPhotoAlbumFormData>;
     isPending: boolean;
-    existingPostData?: IPhotoAlbumDescriptionValues; // (수정시)
-    existingFileIds?: number[]; // (수정시)
-    setExistingFileIds?: Dispatch<SetStateAction<number[]>>; // (수정시)
+    // 수정 시 사용되는 props
+    existingPostData?: IModifiedPhotoAlbumFormData;
+    existingFileIds?: number[];
+    setExistingFileIds?: Dispatch<SetStateAction<number[]>>;
 }
 export default function PhotoAlbumForm({
-    files,
-    setFiles,
     onSubmit,
     isPending,
     existingPostData,
     existingFileIds,
     setExistingFileIds,
 }: IPhotoAlbumFormProps) {
-    const methods = useForm<IPhotoAlbumDescriptionValues>({
+    const methods = useForm<INewPhotoAlbumFormData | IModifiedPhotoAlbumFormData>({
         mode: 'onBlur',
         defaultValues: { title: existingPostData?.title, bodyContent: existingPostData?.bodyContent },
     });
@@ -40,16 +37,11 @@ export default function PhotoAlbumForm({
                     <div className={'flex h-full w-full flex-row'}>
                         {/* 첨부 사진 */}
                         <div className={'h-full w-1/2'}>
-                            <FileInput
-                                files={files}
-                                setFiles={setFiles}
-                                existingFileIds={existingFileIds}
-                                setExistingFileIds={setExistingFileIds}
-                            />
+                            <FileInput existingFileIds={existingFileIds} setExistingFileIds={setExistingFileIds} />
                         </div>
                         {/* 게시물 설명 */}
                         <div className={'ml-5 flex w-1/2 flex-col justify-center'}>
-                            <div className='mb-2 ml-4 font-semibold'>사진 총 {files?.length} 장</div>
+                            {/* <div className='mb-2 ml-4 font-semibold'>사진 총 {files?.length} 장</div> */}
                             <DescriptionInputs />
                             <div className={'flex justify-end'}>
                                 {/* 게시/수정 버튼 */}

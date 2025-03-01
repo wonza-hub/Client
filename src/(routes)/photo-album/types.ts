@@ -45,7 +45,14 @@ export interface INewCommentValues {
     comment: string;
 }
 
-export interface IPhotoAlbumDescriptionValues {
+export interface INewPhotoAlbumFormData {
+    files: IUploadedFileDto[];
+    title: string;
+    bodyContent: string;
+}
+
+export interface IModifiedPhotoAlbumFormData {
+    files: (IExistingFileDto | IUploadedFileDto)[];
     title: string;
     bodyContent: string;
 }
