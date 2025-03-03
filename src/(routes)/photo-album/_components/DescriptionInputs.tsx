@@ -1,5 +1,4 @@
-// COMPONENT: 게시물 제목/설명 input
-import { memo } from 'react';
+// COMPONENT: 게시물 제목 및 설명 input
 import { useFormContext } from 'react-hook-form';
 
 interface IDescriptionData {
@@ -7,7 +6,7 @@ interface IDescriptionData {
     bodyContent: string;
 }
 
-export default memo(function DescriptionInputs() {
+export default function DescriptionInputs() {
     const {
         register,
         formState: { errors },
@@ -66,4 +65,4 @@ export default memo(function DescriptionInputs() {
             </label>
         </>
     );
-});
+}
