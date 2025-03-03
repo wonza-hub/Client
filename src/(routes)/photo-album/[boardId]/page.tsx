@@ -7,7 +7,7 @@ import PhotoAlbumMetadata from './_components/PhotoAlbumMetadata';
 import CommentPostForm from './_components/CommentPostForm';
 import DownloadBtn from './_components/DownloadBtn';
 import ModifyBtn from './_components/ModifyBtn';
-import DeleteBtn from './_components/DeleteBtn';
+import DeleteAlbumPostBtn from './_components/DeleteAlbumPostBtn';
 import LikeBtn from './_components/LikeBtn';
 import MetadataBtn from './_components/MetadataBtn';
 import { IPhotoAlbumFileDto } from '../types';
@@ -72,7 +72,7 @@ export default function Page() {
                                     {albumData.photoPostDto.memberWritten ? (
                                         <>
                                             <ModifyBtn />
-                                            <DeleteBtn />
+                                            <DeleteAlbumPostBtn />
                                         </>
                                     ) : null}
                                 </div>
