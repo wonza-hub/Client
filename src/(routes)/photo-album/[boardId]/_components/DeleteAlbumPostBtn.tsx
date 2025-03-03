@@ -16,12 +16,10 @@ export default function DeleteAlbumPostBtn() {
     };
 
     return (
-        <div className='text-red-600'>
-            <Button
-                onClick={handleAlbumDelete}
-                content={<MdDelete className='mt-[0.2rem] text-3xl' />}
-                disabled={isDeletingAlbum}
-            />
-        </div>
+        <Button
+            onClick={handleAlbumDelete}
+            content={<MdDelete className='mt-[0.2rem] text-3xl text-red-600' />}
+            disabled={isDeletingAlbum}
+        />
     );
 }
