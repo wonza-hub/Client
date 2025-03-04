@@ -4,6 +4,8 @@ import { ErrorBoundary } from 'react-error-boundary';
 import useScrollToTop from '../_hooks/useScrollToTop.ts';
 import GlobalNavbar from '../_components/globalNavBar/GlobarNavbar.tsx';
 import GlobalApiErrorFallback from './_errors/_components/GlobalApiErrorFallback.tsx';
+import { Suspense } from 'react';
+import LoadingSpinner from '../_components/loadingSpinner/LoadingSpinner.tsx';
 
 export default function PrivateLayout() {
     useScrollToTop();
@@ -26,11 +28,19 @@ export default function PrivateLayout() {
     }
 
     return (
-        <div>
+        <>
             {!(pathname.includes('/admin') && pathname.split('/')[1] === 'admin') && <GlobalNavbar />}
             <ErrorBoundary key={pathname} onReset={reset} FallbackComponent={GlobalApiErrorFallback}>
-                <Outlet />
+                <Suspense
+                    fallback={
+                        <div className='flex min-h-screen items-center justify-center'>
+                            <LoadingSpinner size={72} />
+                        </div>
+                    }
+                >
+                    <Outlet />
+                </Suspense>
             </ErrorBoundary>
-        </div>
+        </>
     );
 }

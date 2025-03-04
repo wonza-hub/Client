@@ -1,62 +1,59 @@
-import { createBrowserRouter } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { lazy } from 'react';
 import { PAGE_ROUTE } from '../src/_constants/constants.ts';
 
 import PublicLayout from './(routes)/publicLayout.tsx';
 import PrivateLayout from './(routes)/privateLayout.tsx';
-
 import GlobalNavbar from './_components/globalNavBar/GlobarNavbar.tsx';
-
 import MainHome from './(routes)/home/page.tsx';
-
-import AccountLayout from './(routes)/(account)/layout.tsx';
-import SignInPage from './(routes)/(account)/signin/page.tsx';
-import SignUpPage from './(routes)/(account)/signup/page.tsx';
-
-import HistoryPage from './(routes)/(introduction)/history/page.tsx';
-import ProfessorPage from './(routes)/(introduction)/professor/page.tsx';
-import RegulationsPage from './(routes)/(introduction)/regulations/page.tsx';
-import ExecutivesPage from './(routes)/(introduction)/executives/page.tsx';
-import FormerExecutives from './(routes)/(introduction)/former_executives/page.tsx';
-
-import SearchAccountLayout from './(routes)/(searchAccount)/layout.tsx';
-import SearchIdPage from './(routes)/(searchAccount)/search_id/page.tsx';
-import SearchPasswordPage from './(routes)/(searchAccount)/search_pw/page.tsx';
-
-import PhotoAlbumListPage from './(routes)/photo-album/page.tsx';
-import PhotoAlbumPage from './(routes)/photo-album/[boardId]/page.tsx';
-import PhotoAlbumPostPage from './(routes)/photo-album/post/page.tsx';
-import PhotoAlbumModifyPage from './(routes)/photo-album/modify/page.tsx';
-
-import UnifiedBoardListPage from './(routes)/community/page.tsx';
-import UnifiedBoardPage from './(routes)/community/[boardId]/page.tsx';
-import UnifiedBoardPostPage from './(routes)/community/post/page.tsx';
-import UnifiedBoardModifyPage from './(routes)/community/modify/page.tsx';
-
-import ExamBoardListPage from './(routes)/exam/page.tsx';
-import ExamBoardPage from './(routes)/exam/[boardId]/page.tsx';
-import ExamBoardPostPage from './(routes)/exam/post/page.tsx';
-import ExamBoardModifyPage from './(routes)/exam/modify/page.tsx';
-
-import NoticeBoardListPage from './(routes)/notice/page.tsx';
-import NoticeBoardPage from './(routes)/notice/[boardId]/page.tsx';
-import NoticeBoardPostPage from './(routes)/notice/post/page.tsx';
-import NoticeBoardModifyPage from './(routes)/notice/modify/page.tsx';
-
-import AboutMeBoardListPage from './(routes)/about_me/page.tsx';
-import AboutMeBoardPage from './(routes)/about_me/[boardId]/page.tsx';
-import AboutMeBoardPostPage from './(routes)/about_me/post/page.tsx';
-import AboutMeBoardModifyPage from './(routes)/about_me/modify/page.tsx';
-
-import UserLayout from './(routes)/user/layout.tsx';
-import UserActivityPage from './(routes)/user/activity/page.tsx';
-
-import AdminPage from './(routes)/admin/page.tsx';
-import MemberManagementPage from './(routes)/admin/member_management/page.tsx';
-
-import ExecutivesManagementPage from './(routes)/admin/executives/page.tsx';
-import FormerExecutivesManagementPage from './(routes)/admin/former_executives/page.tsx';
-
 import NotFoundErrorPage from './(routes)/_errors/_components/NotFoundErrorPage.tsx';
+
+const AccountLayout = lazy(() => import('./(routes)/(account)/layout.tsx'));
+const SignInPage = lazy(() => import('./(routes)/(account)/signin/page.tsx'));
+const SignUpPage = lazy(() => import('./(routes)/(account)/signup/page.tsx'));
+
+const HistoryPage = lazy(() => import('./(routes)/(introduction)/history/page.tsx'));
+const ProfessorPage = lazy(() => import('./(routes)/(introduction)/professor/page.tsx'));
+const RegulationsPage = lazy(() => import('./(routes)/(introduction)/regulations/page.tsx'));
+const ExecutivesPage = lazy(() => import('./(routes)/(introduction)/executives/page.tsx'));
+const FormerExecutives = lazy(() => import('./(routes)/(introduction)/former_executives/page.tsx'));
+
+const SearchAccountLayout = lazy(() => import('./(routes)/(searchAccount)/layout.tsx'));
+const SearchIdPage = lazy(() => import('./(routes)/(searchAccount)/search_id/page.tsx'));
+const SearchPasswordPage = lazy(() => import('./(routes)/(searchAccount)/search_pw/page.tsx'));
+
+const PhotoAlbumListPage = lazy(() => import('./(routes)/photo-album/page.tsx'));
+const PhotoAlbumPage = lazy(() => import('./(routes)/photo-album/[boardId]/page.tsx'));
+const PhotoAlbumPostPage = lazy(() => import('./(routes)/photo-album/post/page.tsx'));
+const PhotoAlbumModifyPage = lazy(() => import('./(routes)/photo-album/modify/page.tsx'));
+
+const UnifiedBoardListPage = lazy(() => import('./(routes)/community/page.tsx'));
+const UnifiedBoardPage = lazy(() => import('./(routes)/community/[boardId]/page.tsx'));
+const UnifiedBoardPostPage = lazy(() => import('./(routes)/community/post/page.tsx'));
+const UnifiedBoardModifyPage = lazy(() => import('./(routes)/community/modify/page.tsx'));
+
+const ExamBoardListPage = lazy(() => import('./(routes)/exam/page.tsx'));
+const ExamBoardPage = lazy(() => import('./(routes)/exam/[boardId]/page.tsx'));
+const ExamBoardPostPage = lazy(() => import('./(routes)/exam/post/page.tsx'));
+const ExamBoardModifyPage = lazy(() => import('./(routes)/exam/modify/page.tsx'));
+
+const NoticeBoardListPage = lazy(() => import('./(routes)/notice/page.tsx'));
+const NoticeBoardPage = lazy(() => import('./(routes)/notice/[boardId]/page.tsx'));
+const NoticeBoardPostPage = lazy(() => import('./(routes)/notice/post/page.tsx'));
+const NoticeBoardModifyPage = lazy(() => import('./(routes)/notice/modify/page.tsx'));
+
+const AboutMeBoardListPage = lazy(() => import('./(routes)/about_me/page.tsx'));
+const AboutMeBoardPage = lazy(() => import('./(routes)/about_me/[boardId]/page.tsx'));
+const AboutMeBoardPostPage = lazy(() => import('./(routes)/about_me/post/page.tsx'));
+const AboutMeBoardModifyPage = lazy(() => import('./(routes)/about_me/modify/page.tsx'));
+
+const UserLayout = lazy(() => import('./(routes)/user/layout.tsx'));
+const UserActivityPage = lazy(() => import('./(routes)/user/activity/page.tsx'));
+
+const AdminPage = lazy(() => import('./(routes)/admin/page.tsx'));
+const MemberManagementPage = lazy(() => import('./(routes)/admin/member_management/page.tsx'));
+const ExecutivesManagementPage = lazy(() => import('./(routes)/admin/executives/page.tsx'));
+const FormerExecutivesManagementPage = lazy(() => import('./(routes)/admin/former_executives/page.tsx'));
 
 const router = createBrowserRouter([
     {
@@ -216,4 +213,6 @@ const router = createBrowserRouter([
     },
 ]);
 
-export default router;
+export const Routes: React.FC = () => {
+    return <RouterProvider router={router} />;
+};
