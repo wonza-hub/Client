@@ -8,6 +8,11 @@ import setupMock from '../mock/index';
 
 Modal.setAppElement('#root');
 
+// MOCKUP: 개발 중에만 목업 함수 초기화
+if (import.meta.env.DEV) {
+    setupMock(axios);
+}
+
 const queryClient = new QueryClient({
     defaultOptions: {
         queries: {
@@ -18,7 +23,6 @@ const queryClient = new QueryClient({
 
 export default function App() {
     axios.defaults.withCredentials = true;
-    setupMock(axios);
     return (
         <QueryClientProvider client={queryClient}>
             <Root />
