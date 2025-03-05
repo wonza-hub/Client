@@ -7,7 +7,7 @@ import useGetDownloadedFile from '../../_lib/getDownloadedFile';
 import downloadFromTempDownloadUrl from '../../../../_utils/downloadFromTempDownloadUrl';
 
 export default function DownloadBtn({ selectedPhoto }: { selectedPhoto: IExistingFileDto }) {
-    const { refetch } = useGetDownloadedFile(selectedPhoto?.id);
+    const { refetch, isFetching } = useGetDownloadedFile(selectedPhoto?.id);
 
     // HANDLER: 사진 다운로드 버튼 핸들러
     const handleDownloadBtnClick = async () => {
@@ -19,5 +19,11 @@ export default function DownloadBtn({ selectedPhoto }: { selectedPhoto: IExistin
         }
     };
 
-    return <Button onClick={() => handleDownloadBtnClick()} content={<FiDownload className='text-3xl' />} />;
+    return (
+        <Button
+            disabled={isFetching}
+            onClick={() => handleDownloadBtnClick()}
+            content={<FiDownload className='text-3xl' />}
+        />
+    );
 }
