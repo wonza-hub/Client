@@ -5,26 +5,32 @@ import OvalButton from '../../../_components/button/OvalButton';
 import { Dispatch, SetStateAction } from 'react';
 import { FormProvider, SubmitHandler, useForm } from 'react-hook-form';
 import LoadingSpinner from '../../../_components/loadingSpinner/LoadingSpinner';
-import { IModifiedPhotoAlbumFormData, INewPhotoAlbumFormData } from '../types';
+import { IExistingFileDto, IModifiedPhotoAlbumFormData, INewPhotoAlbumFormData, IPhotoPostDto } from '../types';
 
 interface IPhotoAlbumFormProps {
     onSubmit: SubmitHandler<INewPhotoAlbumFormData | IModifiedPhotoAlbumFormData>;
     isPending: boolean;
     // 수정 시 사용되는 props
-    existingPostData?: IModifiedPhotoAlbumFormData;
+    existingFiles?: IExistingFileDto[];
+    existingPostData?: Pick<IPhotoPostDto, 'title' | 'bodyContent'>;
     existingFileIds?: number[];
     setExistingFileIds?: Dispatch<SetStateAction<number[]>>;
 }
 export default function PhotoAlbumForm({
     onSubmit,
     isPending,
+    existingFiles,
     existingPostData,
     existingFileIds,
     setExistingFileIds,
 }: IPhotoAlbumFormProps) {
     const methods = useForm<INewPhotoAlbumFormData | IModifiedPhotoAlbumFormData>({
         mode: 'onBlur',
-        defaultValues: { title: existingPostData?.title, bodyContent: existingPostData?.bodyContent },
+        defaultValues: {
+            files: existingFiles,
+            title: existingPostData?.title,
+            bodyContent: existingPostData?.bodyContent,
+        },
     });
 
     return (
@@ -37,7 +43,11 @@ export default function PhotoAlbumForm({
                     <div className={'flex h-full w-full flex-row'}>
                         {/* 첨부 사진 */}
                         <div className={'h-full w-1/2'}>
-                            <FileInput existingFileIds={existingFileIds} setExistingFileIds={setExistingFileIds} />
+                            <FileInput
+                                existingFiles={existingFiles}
+                                existingFileIds={existingFileIds}
+                                setExistingFileIds={setExistingFileIds}
+                            />
                         </div>
                         {/* 게시물 설명 */}
                         <div className={'ml-5 flex w-1/2 flex-col justify-center'}>

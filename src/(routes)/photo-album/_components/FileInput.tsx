@@ -20,13 +20,14 @@ const isFulfilled = <T,>(input: PromiseSettledResult<T>): input is PromiseFulfil
     input.status === 'fulfilled';
 
 interface IFileInputProps {
+    existingFiles?: IExistingFileDto[];
     existingFileIds?: number[];
     setExistingFileIds?: React.Dispatch<React.SetStateAction<number[]>>;
 }
 
-export default memo(function FileInput({ existingFileIds, setExistingFileIds }: IFileInputProps) {
+export default memo(function FileInput({ existingFiles, existingFileIds, setExistingFileIds }: IFileInputProps) {
     const { register, setValue } = useFormContext();
-    const watchedFiles = useWatch({ name: 'files', defaultValue: [] });
+    const watchedFiles = useWatch({ name: 'files', defaultValue: [...existingFiles] });
 
     const [compressing, setCompressing] = useState(false);
 
