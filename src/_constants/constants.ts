@@ -1,3 +1,6 @@
+import { MRT_ColumnDef } from 'material-react-table';
+import { IMember } from '../(routes)/admin/type';
+
 // 기존 등록 사진 여부
 export const ORIGINAL_FILE_FLAG: string = 'originalFileName';
 
@@ -109,7 +112,7 @@ export const TABLE_COL_NAME = Object.freeze({
                 // helperText: validationErrors?.state,
             },
         },
-    ],
+    ] as MRT_ColumnDef<IMember>[],
     signup: [
         {
             accessorKey: 'name',

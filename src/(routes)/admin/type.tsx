@@ -11,7 +11,10 @@ export interface IMember {
     graduateYear: number;
     memberAuthority: string;
 }
-
+export interface IUpdatedMember {
+    updatedMemberId: number;
+    updatedValues: IMember;
+}
 export interface IEditProps {
     row: MRT_Row<IMember>;
     values: IMember;
