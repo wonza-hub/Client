@@ -1,15 +1,15 @@
-// COMPONENT: 사진 목록
+// COMPONENT: 선택하지 않은 사진 목록
 import { SetStateAction, memo, Dispatch } from 'react';
 import { FaMagnifyingGlass } from 'react-icons/fa6';
 import { StringCombinator } from '../../../../_utils/StringCombinator';
 import { IPhotoAlbumFileDto } from '../../types';
 
-interface IProps {
+interface IUnselectedPhotosProps {
     photos: IPhotoAlbumFileDto[];
     setSelectedPhoto: Dispatch<SetStateAction<IPhotoAlbumFileDto>>;
 }
 
-export default memo(function UnselectedPhotos({ photos, setSelectedPhoto }: IProps) {
+export default memo(function UnselectedPhotos({ photos, setSelectedPhoto }: IUnselectedPhotosProps) {
     // 클릭된 사진으로 선택된 사진 변경하는 핸들러
     const handleUnselectedPhotoClick = (clickedPhoto: IPhotoAlbumFileDto) => {
         setSelectedPhoto(clickedPhoto);
