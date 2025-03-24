@@ -63,7 +63,7 @@ export default memo(function LinkBanner() {
                                     slideIdx === idx + 1 ? 'animate-fadein opacity-100' : 'opacity-0'
                                 }`}
                             >
-                                <img className='brightness-[105%]' src={item.src} alt='' />
+                                <img className='h-full w-full brightness-[105%]' src={item.src} alt='' />
                             </div>
                             <div
                                 className={`SlideTitle absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2  
