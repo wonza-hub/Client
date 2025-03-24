@@ -1,8 +1,6 @@
 // COMPONENT: 파일 입력 컴포넌트
 import { useState, useRef } from 'react';
 import { usePostLife4CutPhoto } from '../../_lib/postLife4CutPhoto';
-// import FileInput from './FileInput';
-// import UploadButtons from './UploadButtons';
 import { TbCameraSelfie } from 'react-icons/tb';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 import { MdOutlineCancel } from 'react-icons/md';
@@ -68,7 +66,7 @@ const UploadButtons = ({ file, isPending, onCancel, onSubmit }) => (
 // COMPONENT: 사진 업로드 폼
 export default function PhotoPostForm() {
     const [file, setFile] = useState<File>(null);
-    const [fileName, setFileName] = useState<string>('No selected file');
+    const [, setFileName] = useState<string>('No selected file');
     const fileInputRef = useRef<HTMLInputElement>();
 
     const { mutate: createPhoto, isPending: isPhotoPending } = usePostLife4CutPhoto();
