@@ -1,9 +1,17 @@
 import { AxiosInstance } from "axios";
 import MockAdapter from "axios-mock-adapter";
 import mockPhotoAlbum from "./api/photoAlbum";
+import mockPhotoAlbumDetail from "./api/photoAlbumDetail";
+import mockLife4Cut from "./api/life4Cut";
+import mockHome from "./api/homeBanner";
 
 // 목업 함수들을 모아놓은 객체
-const setupMockFns = { mockPhotoAlbum };
+const setupMockFns = {
+  mockPhotoAlbum,
+  mockPhotoAlbumDetail,
+  mockLife4Cut,
+  mockHome,
+};
 
 const setupMock = (axios: AxiosInstance) => {
   const mock = new MockAdapter(axios);

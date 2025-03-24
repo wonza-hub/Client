@@ -16,14 +16,14 @@ const mockPhotoAlbum = (mock: MockAdapter) => {
       endIdx
     );
 
-    return [
-      500,
-      {
-        response: {
-          message: "서버에러",
-        },
-      },
-    ];
+    // return [
+    //   500,
+    //   {
+    //     response: {
+    //       message: "서버에러",
+    //     },
+    //   },
+    // ];
 
     return [
       200,
