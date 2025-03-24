@@ -4,8 +4,14 @@ import Modal from 'react-modal';
 import Root from './Root.tsx';
 import axios from 'axios';
 import './index.css';
+import setupMock from '../mock/index';
 
 Modal.setAppElement('#root');
+
+// MOCKUP: 개발 중에만 목업 함수 초기화
+if (import.meta.env.DEV) {
+    setupMock(axios);
+}
 
 const queryClient = new QueryClient({
     defaultOptions: {

@@ -16,10 +16,8 @@ export default function Page() {
             <section>
                 <MainView />
             </section>
-            {/* 고정 배경화면 */}
-            <section className="h-[9rem] bg-[url('./_assets/images/nestnet-bg.png')]  bg-fixed bg-bottom bg-no-repeat" />
             {/* 포토존 */}
-            <section className='relative -top-44 pt-60' ref={photoZoneRef}>
+            <section className='mb-32' ref={photoZoneRef}>
                 <PhotoZone inView={inView} />
             </section>
             {/* 서비스 */}

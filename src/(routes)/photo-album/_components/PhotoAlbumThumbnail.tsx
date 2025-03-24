@@ -13,8 +13,8 @@ export default memo(function PhotoAlbumThumbnail({ thumbnailData }: PhotoAlbumTh
             {/* 썸네일 이미지 */}
             <img
                 src={StringCombinator.getImageURL(thumbnailData.saveFilePath, thumbnailData.saveFileName)}
-                alt='photo-album_thumbnail'
-                className='ThumbnailImage'
+                alt={`${thumbnailData.title} 앨범의 썸네일`}
+                className='ThumbnailImage w-full'
             />
             {/* 썸네일 호버시 나타나는 커버 */}
             <div className='absolute left-0 top-0 flex h-full w-full cursor-zoom-in flex-col justify-between rounded-xl opacity-0 duration-300 hover:bg-black hover:opacity-80'>

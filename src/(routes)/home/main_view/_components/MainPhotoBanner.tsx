@@ -27,6 +27,7 @@ export default memo(function MainPhotoBanner() {
 
     return (
         <>
+            {/* 배너 이미지 표시 */}
             {sliderItems.map((item, idx) => {
                 return (
                     <div
@@ -45,13 +46,15 @@ export default memo(function MainPhotoBanner() {
                     </div>
                 );
             })}
+            {/* 배너에 걸린 링크 */}
             {sliderItems.map((item, idx) => {
                 return slideIdx === idx + 1 ? (
                     <Link key={idx} to={item.link} className={`absolute h-full w-full`} />
                 ) : null;
             })}
+            {/* 인덱스 Dot */}
             <div className='absolute bottom-2 left-1/2 mb-1 flex -translate-x-1/2 flex-row'>
-                {sliderItems?.map((_, idx) => (
+                {Array.from({ length: sliderItems.length })?.map((_, idx) => (
                     <Dot
                         key={idx}
                         isActive={slideIdx === idx + 1 ? true : false}

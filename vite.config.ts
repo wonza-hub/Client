@@ -7,6 +7,17 @@ export default defineConfig({
   build: {
     outDir: "dist",
     assetsDir: "_assets",
+    rollupOptions: {
+      output: {
+        // 수동으로 chunk 생성
+        manualChunks: (id) => {
+          if (id.indexOf("node_modules") !== -1) {
+            const module = id.split("node_modules/").pop().split("/")[0];
+            return `vendor-${module}`;
+          }
+        },
+      },
+    },
   },
   server: {
     proxy: {

@@ -1,9 +1,7 @@
 export const StringCombinator = {
     // 이미지 경로 조합
     getImageURL: (saveFilePath: string, saveFileName: string): string => {
-        // TEST
         const imageRootURL = `/api/image`;
-        // const imageRootURL = `/api`;
 
         return `${imageRootURL}/${saveFilePath}/${saveFileName}`;
     },

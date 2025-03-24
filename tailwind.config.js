@@ -29,12 +29,19 @@ export default {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" },
         },
+        ping_reverse: {
+          "75%, 100%": {
+            transform: "scale(0.7)",
+            opacity: "20",
+          },
+        },
       },
       // 위에서 정의한 keyframe에 대한 애니메이션 상수 정의
       animation: {
         fadein: "fadein 0.2s linear forwards",
         swapdown: "swapdown 0.5s linear forwards",
         infiniteslide: "infiniteslide 60s linear infinite",
+        ping_reverse: "ping_reverse 1.5s cubic-bezier(0, 0, 0.2, 1) infinite",
       },
     },
   },

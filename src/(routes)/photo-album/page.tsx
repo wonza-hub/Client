@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import Masonry from 'react-masonry-css';
 import { Flex } from '@chakra-ui/react';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -12,6 +11,7 @@ import LoadingSpinner from '../../_components/loadingSpinner/LoadingSpinner';
 import { FaPlus } from 'react-icons/fa';
 import { PAGE_ROUTE } from '../../_constants/constants';
 import { IPhotoAlbumMetaData } from './types';
+import getNextPhotoAlbums from './_lib/getNextPhotoAlbums';
 
 // Masonary 레이아웃 열 갯수 (반응형)
 const breakpointColumnsObj = {
@@ -35,7 +35,7 @@ export default function Page() {
         isFetchingNextPage,
     } = useInfiniteQuery({
         queryKey: ['albums'],
-        queryFn: getMorePhotoAlbums,
+        queryFn: getNextPhotoAlbums,
         // page 파라미터 초기값
         initialPageParam: 1,
         // lastPage: 마지막에 불러온 한 페이지 내 배열, allPages: 현재까지 불러온 총페이지 배열
@@ -101,12 +101,3 @@ export default function Page() {
         </>
     );
 }
-
-// REST: 스크롤시 다음 페이지의 앨범데이터를 가져옴
-const getMorePhotoAlbums = async ({ pageParam }) => {
-    const photoAlbumPagesURL = `/api/photo-post?page=${pageParam}`;
-
-    return await axios.get(photoAlbumPagesURL).then(res => {
-        return res.data.response.dtoList;
-    });
-};

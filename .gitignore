@@ -1,3 +1,7 @@
+# Test
+mock/img/
+mock/json/
+
 # Logs
 logs
 *.log
@@ -28,3 +32,9 @@ dist-ssr
 .env.development.local
 .env.test.local
 .env.production.local
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

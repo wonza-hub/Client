@@ -7,26 +7,26 @@ import { PAGE_ROUTE } from '../../../../_constants/constants';
 import { ILinkBannerItem } from '../../type';
 import useInterval from '../../../../_hooks/useInterval';
 
-// 배너 내 각 슬라이드 아이템
+// 배너 내 슬라이드 아이템
 const sliderItems: ILinkBannerItem[] = [
     {
         title: '연혁',
-        src: '_assets/images/history-bg.jpg',
+        src: '_assets/images/history-bg.webp',
         link: PAGE_ROUTE.HISTORY,
     },
     {
         title: '회칙',
-        src: '_assets/images/regulations-bg.jpg',
+        src: '_assets/images/regulations-bg.webp',
         link: PAGE_ROUTE.REGULATIONS,
     },
     {
         title: '지도교수',
-        src: '_assets/images/professor-bg.jpg',
+        src: '_assets/images/professor-bg.webp',
         link: PAGE_ROUTE.PROFESSOR,
     },
     {
         title: '임원',
-        src: '_assets/images/executives-bg.jpg',
+        src: '_assets/images/executives-bg.webp',
         link: PAGE_ROUTE.EXECUTIVES,
     },
 ];
@@ -54,6 +54,7 @@ export default memo(function LinkBanner() {
     return (
         <div className='relative h-full w-full select-none'>
             <>
+                {/* 이미지 */}
                 {sliderItems.map((item, idx) => {
                     return (
                         <div key={idx}>
@@ -62,7 +63,7 @@ export default memo(function LinkBanner() {
                                     slideIdx === idx + 1 ? 'animate-fadein opacity-100' : 'opacity-0'
                                 }`}
                             >
-                                <img className='brightness-[105%]' src={item.src} alt='' />
+                                <img className='h-full w-full brightness-[105%]' src={item.src} alt='' />
                             </div>
                             <div
                                 className={`SlideTitle absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2  
@@ -75,21 +76,29 @@ export default memo(function LinkBanner() {
                         </div>
                     );
                 })}
+                {/* 링크 */}
                 {sliderItems.map((item, idx) => {
                     return slideIdx === idx + 1 ? (
-                        <Link key={idx} to={item.link} className={`absolute h-full w-full`} />
+                        <Link
+                            aria-label={item.title}
+                            aria-live='polite'
+                            key={idx}
+                            to={item.link}
+                            className={`absolute h-full w-full`}
+                        />
                     ) : null;
                 })}
             </>
-            {/* 배너 양방향 이동 버튼 */}
+            {/* 좌우 전환 버튼 */}
             <span className='absolute top-1/2 my-auto flex -translate-y-1/2 flex-col justify-center'>
                 <SliderArrowBtn moveSlide={prevSlide} direction={'prev'} />
             </span>
             <span className='absolute right-0 top-1/2 my-auto flex -translate-y-1/2 flex-col justify-center'>
                 <SliderArrowBtn moveSlide={nextSlide} direction={'next'} />
             </span>
+            {/* 전환 인덱스 Dot */}
             <div className='absolute bottom-0 left-1/2 mb-1 flex -translate-x-1/2 flex-row'>
-                {sliderItems?.map((_, idx) => (
+                {Array.from({ length: sliderItems.length })?.map((_, idx) => (
                     <Dot
                         key={idx}
                         isActive={slideIdx === idx + 1 ? true : false}

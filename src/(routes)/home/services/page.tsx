@@ -1,3 +1,4 @@
+// 메인페이지에서 바로가기를 제공하는 서비스를 보여주는 부분
 import { useInView } from 'react-intersection-observer';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -21,7 +22,6 @@ export default function Page() {
     const { ref: observeCardRef, inView } = useInView();
     const [isVisible, setIsVisible] = useState(false);
 
-    // ref가 inView 영역에 도달하면 메뉴카드를 불러옴
     useEffect(() => {
         if (inView) {
             setIsVisible(true);
@@ -33,25 +33,22 @@ export default function Page() {
             <div className='text-center text-[2.5rem] font-semibold text-gray-700'>서비스</div>
             <div className='ServiceContent mx-auto grid h-fit max-w-7xl select-none grid-cols-1 grid-rows-1 gap-x-10 gap-y-10 py-20 md:grid-cols-2 xl:grid-cols-3'>
                 {services.map((service, idx) => (
-                    <Link to={`${service.link}`} key={idx}>
+                    <Link to={`${service.link}`} key={idx} aria-label={`${service.mainTitle} 바로가기`}>
                         <div
                             className={`${isVisible ? 'xl:animate-swapdown' : 'xl:opacity-0'} 
                             relative flex h-full w-full flex-col overflow-hidden rounded-lg bg-white shadow-lg  
                             duration-300 hover:shadow-xl hover:ease-in-out`}
-                            key={idx}
+                            ref={observeCardRef}
                         >
-                            <div
-                                className='h-full w-full overflow-hidden duration-300 ease-in-out hover:scale-110 hover:duration-300'
-                                ref={observeCardRef}
-                            >
+                            <div className='h-full w-full overflow-hidden duration-300 ease-in-out hover:scale-110 hover:duration-300'>
                                 <img
                                     className='h-full w-full object-cover brightness-90'
                                     src={service.imgSrc}
-                                    alt='serviceThumbnail'
+                                    alt={`${service.mainTitle} 바로가기 이미지`}
                                 />
                             </div>
-                            <div className='absolute bottom-0 right-0 w-fit rounded-tl-lg px-4 pb-1 pt-2 text-white opacity-90'>
-                                <div className='mainTitle mb-2 text-white'>
+                            <div className='absolute bottom-0 right-0 w-fit rounded-tl-lg bg-black bg-opacity-70 px-4 pb-1 pt-2 text-gray-100'>
+                                <div className='mainTitle mb-2'>
                                     <span className='text-xl'>{service.mainTitle}</span>
                                 </div>
                             </div>

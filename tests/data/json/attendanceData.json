@@ -1,0 +1,48 @@
+{
+  "attendance-statistics": {
+    "weeklyStatisticsDtoList": [
+      {
+        "memberName": "홍길동",
+        "point": 85
+      },
+      {
+        "memberName": "김철수",
+        "point": 92
+      },
+      {
+        "memberName": "이영희",
+        "point": 78
+      },
+      {
+        "memberName": "박지민",
+        "point": 88
+      },
+      {
+        "memberName": "최민수",
+        "point": 95
+      }
+    ],
+    "monthlyStatisticsDtoList": [
+      {
+        "memberName": "홍길동",
+        "point": 88
+      },
+      {
+        "memberName": "김철수",
+        "point": 94
+      },
+      {
+        "memberName": "이영희",
+        "point": 81
+      },
+      {
+        "memberName": "박지민",
+        "point": 90
+      },
+      {
+        "memberName": "최민수",
+        "point": 97
+      }
+    ]
+  }
+}
