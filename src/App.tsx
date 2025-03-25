@@ -4,14 +4,22 @@ import Modal from 'react-modal';
 import Root from './Root.tsx';
 import axios from 'axios';
 import './index.css';
-import setupMock from '../mock/index';
-
-Modal.setAppElement('#root');
 
 // MOCKUP: 개발 중에만 목업 함수 초기화
+// 기존
+// import setupMock from '../mock/index';
+// if (import.meta.env.DEV) {
+//     setupMock(axios);
+// }
+
+// 수정 후
 if (import.meta.env.DEV) {
-    setupMock(axios);
+    import('../mock/index').then(setupMock => {
+        setupMock.default(axios);
+    });
 }
+
+Modal.setAppElement('#root');
 
 const queryClient = new QueryClient({
     defaultOptions: {
