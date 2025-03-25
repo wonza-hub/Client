@@ -8,9 +8,6 @@ export default defineConfig({
     outDir: "dist",
     assetsDir: "_assets",
     rollupOptions: {
-      external: [
-        /^mock\/.*/, // mock/ 디렉토리 아래의 모든 파일을 제외
-      ],
       output: {
         // 수동으로 chunk 생성
         manualChunks: (id) => {
