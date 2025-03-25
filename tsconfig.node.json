@@ -6,6 +6,7 @@
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true
   },
-  "include": ["vite.config.ts"],
-  "exclude": ["node_modules", "mock"]
+  "include": [
+    "vite.config.ts"
+  ]
 }
