@@ -27,7 +27,7 @@ interface IFileInputProps {
 
 export default memo(function FileInput({ existingFiles, existingFileIds, setExistingFileIds }: IFileInputProps) {
     const { register, setValue } = useFormContext();
-    const watchedFiles = useWatch({ name: 'files', defaultValue: [...existingFiles] });
+    const watchedFiles = useWatch({ name: 'files', defaultValue: [...(existingFiles || [])] });
 
     const [compressing, setCompressing] = useState(false);
 
