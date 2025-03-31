@@ -17,36 +17,32 @@ export default function Page() {
 
     return (
         <>
-            <div className='w-full pl-[14rem] pt-20'>
-                <div className='MainView flex h-full w-full flex-col justify-evenly px-9 py-6'>
-                    <div className='text-right'>
-                        <ToggleButtonGroup
-                            color='secondary'
-                            size='small'
-                            value={currentListView}
-                            exclusive
-                            onChange={(_, newCurrentListView) => handleChangeCurrentListView(newCurrentListView)}
-                            aria-label='Platform'
-                        >
-                            <ToggleButton value='members'>전체 회원</ToggleButton>
-                            <ToggleButton value='signupReqs'>회원가입 요청</ToggleButton>
-                        </ToggleButtonGroup>
-                    </div>
-                    <section>
-                        {currentListView === 'members' ? (
-                            <article className='memberList flex flex-col'>
-                                <h1 className='-mt-6 mb-4 ml-2 text-lg font-semibold text-[#111111]'>전체 회원</h1>
-                                <MemberList />
-                            </article>
-                        ) : (
-                            <article className='signupReqList flex flex-col'>
-                                <h1 className='-mt-6 mb-4 ml-2 text-lg font-semibold text-[#111111]'>회원가입 요청</h1>
-                                <SignupReqList />
-                            </article>
-                        )}
-                    </section>
-                </div>
+            <div className='text-right'>
+                <ToggleButtonGroup
+                    color='secondary'
+                    size='small'
+                    value={currentListView}
+                    exclusive
+                    onChange={(_, newCurrentListView) => handleChangeCurrentListView(newCurrentListView)}
+                    aria-label='Platform'
+                >
+                    <ToggleButton value='members'>전체 회원</ToggleButton>
+                    <ToggleButton value='signupReqs'>회원가입 요청</ToggleButton>
+                </ToggleButtonGroup>
             </div>
+            <section>
+                {currentListView === 'members' ? (
+                    <article className='memberList flex flex-col'>
+                        <h1 className='-mt-6 mb-4 ml-2 text-lg font-semibold text-[#111111]'>전체 회원</h1>
+                        <MemberList />
+                    </article>
+                ) : (
+                    <article className='signupReqList flex flex-col'>
+                        <h1 className='-mt-6 mb-4 ml-2 text-lg font-semibold text-[#111111]'>회원가입 요청</h1>
+                        <SignupReqList />
+                    </article>
+                )}
+            </section>
         </>
     );
 }

@@ -14,6 +14,10 @@ export default function NavigationBar() {
             title: '전 임원 관리',
             link: 'former_executives',
         },
+        {
+            title: '사진 게시판 등록',
+            link: 'photo_album',
+        },
     ];
 
     return (

@@ -34,9 +34,7 @@ export default function Page() {
 
     return (
         <main className='overflow-auto'>
-            <div className='absolute left-1/2 -z-10 -translate-x-1/2 -translate-y-1/2 py-6 pt-[43rem]'>
-                <PhotoAlbumForm onSubmit={handlePostFormSubmit} isPending={isPhotoAlbumCreationPending} />
-            </div>
+            <PhotoAlbumForm onSubmit={handlePostFormSubmit} isPending={isPhotoAlbumCreationPending} />
         </main>
     );
 }

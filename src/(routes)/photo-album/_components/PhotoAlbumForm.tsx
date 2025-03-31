@@ -35,7 +35,7 @@ export default function PhotoAlbumForm({
 
     return (
         <div
-            className={`FormWrapper h-[40rem] w-[42rem] rounded-3xl bg-white
+            className={`FormWrapper m-4 h-[40rem] w-[42rem] rounded-3xl bg-white
             p-8 shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px]`}
         >
             <FormProvider {...methods}>

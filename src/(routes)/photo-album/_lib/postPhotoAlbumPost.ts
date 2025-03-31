@@ -15,7 +15,8 @@ const useCreatePhotoAlbumPost = (navigate: NavigateFunction) => {
                 headers: { 'Content-Type': 'multipart/form-data' },
             }),
         onSuccess: () => {
-            navigate(`/${PAGE_ROUTE.PHOTOALBUMS}`);
+            alert('게시물 등록에 성공하였습니다.');
+            location.reload();
         },
         onError: e => {
             let errorMessage = '알 수 없는 에러가 발생했습니다. 관리자에게 문의해주세요.';

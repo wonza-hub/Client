@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Masonry from 'react-masonry-css';
 import { Flex } from '@chakra-ui/react';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -8,8 +8,6 @@ import Skeleton from '@mui/material/Skeleton';
 import Box from '@mui/material/Box';
 import PhotoAlbumThumbnail from './_components/PhotoAlbumThumbnail';
 import LoadingSpinner from '../../_components/loadingSpinner/LoadingSpinner';
-import { FaPlus } from 'react-icons/fa';
-import { PAGE_ROUTE } from '../../_constants/constants';
 import { IPhotoAlbumMetaData } from './types';
 import getNextPhotoAlbums from './_lib/getNextPhotoAlbums';
 
@@ -23,8 +21,6 @@ const breakpointColumnsObj = {
 export default function Page() {
     // 무한스크롤 api 호출 지점 옵저버
     const { ref: observeBtmRef, inView } = useInView();
-
-    const navigate = useNavigate();
 
     // 리액트 쿼리 무한스크롤 api
     const {
@@ -55,13 +51,6 @@ export default function Page() {
 
     return (
         <>
-            {/* 사진게시판 게시물 등록 버튼 */}
-            <div
-                className='fixed bottom-10 right-12 z-10 flex h-10 w-10 cursor-pointer flex-col items-center justify-center rounded-full bg-primary text-white'
-                onClick={() => navigate(`/${PAGE_ROUTE.PHOTOALBUMS}/post`)}
-            >
-                <FaPlus />
-            </div>
             {/* 게시물 목록 */}
             <div className='relative mx-auto flex h-[calc(100dvh-4.68rem)] flex-col overflow-y-auto border-x border-gray-200 scrollbar-hide xl:w-[70rem]'>
                 <Flex sx={{ width: '100%' }} as={Masonry} breakpointCols={breakpointColumnsObj}>

@@ -119,10 +119,6 @@ const router = createBrowserRouter([
                         element: <PhotoAlbumPage />,
                     },
                     {
-                        path: `/${PAGE_ROUTE.PHOTOALBUMS}/post`,
-                        element: <PhotoAlbumPostPage />,
-                    },
-                    {
                         path: `/${PAGE_ROUTE.PHOTOALBUMS}/modify/:boardId`,
                         element: <PhotoAlbumModifyPage />,
                     },
@@ -205,6 +201,7 @@ const router = createBrowserRouter([
                             { path: 'users', element: <MemberManagementPage /> },
                             { path: 'executives', element: <ExecutivesManagementPage /> },
                             { path: 'former_executives', element: <FormerExecutivesManagementPage /> },
+                            { path: 'photo_album', element: <PhotoAlbumPostPage /> },
                         ],
                     },
                 ],
