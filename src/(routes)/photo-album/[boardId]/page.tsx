@@ -8,7 +8,7 @@ import CommentPostForm from './_components/CommentPostForm';
 import DownloadBtn from './_components/DownloadBtn';
 import ModifyBtn from './_components/ModifyBtn';
 import DeleteAlbumPostBtn from './_components/DeleteAlbumPostBtn';
-import LikeBtn from './_components/LikeBtn';
+import LikeBtn from './_components/photoAlbumLikeBtn';
 import MetadataBtn from './_components/MetadataBtn';
 import { IPhotoAlbumFileDto } from '../types';
 import useGetPhotoAlbumDetail from '../_lib/getPhotoAlbumDetail';
@@ -64,10 +64,7 @@ export default function Page() {
                                 <div className='flex-start mt-8 flex h-full flex-col items-center gap-3 pr-3'>
                                     <DownloadBtn selectedPhoto={selectedPhoto} />
                                     <MetadataBtn setIsMetadataVisible={setIsMetadataVisible} />
-                                    <LikeBtn
-                                        isMemberLiked={albumData.memberLiked}
-                                        likeCount={albumData.photoPostDto.likeCount}
-                                    />
+                                    <LikeBtn />
                                     {/* 권한자에게만 보이는 버튼 */}
                                     {albumData.photoPostDto.memberWritten ? (
                                         <>
