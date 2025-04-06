@@ -16,8 +16,8 @@ export function usePostMyAttendance() {
         onError: async e => {
             let errorMessage = '';
 
-            if (isServerError(e) && e.response.data && e?.response?.data?.message) {
-                errorMessage = e.response.data.message;
+            if (isServerError(e) && e.response.data && e?.response?.data?.error.message) {
+                errorMessage = e.response.data.error.message;
                 alert(errorMessage);
 
                 return;

@@ -22,8 +22,8 @@ const useCreatePhotoAlbumPost = (navigate: NavigateFunction) => {
             let errorMessage = '알 수 없는 에러가 발생했습니다. 관리자에게 문의해주세요.';
 
             // 서버 에러 확인
-            if (isServerError(e) && e.response.data && e?.response?.data?.message) {
-                errorMessage = e.response.data.message;
+            if (isServerError(e) && e.response.data && e?.response?.data?.error.message) {
+                errorMessage = e.response.data.error.message;
                 alert(errorMessage);
 
                 return;
