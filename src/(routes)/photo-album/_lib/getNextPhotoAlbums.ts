@@ -3,7 +3,7 @@ import axios from 'axios';
 import { QueryFunction } from '@tanstack/react-query';
 import { IPhotoAlbumMetaData } from '../types';
 
-const getNextPhotoAlbums: QueryFunction<IPhotoAlbumMetaData[], ['albums'], number> = async ({ pageParam }) => {
+const getNextPhotoAlbums: QueryFunction<IPhotoAlbumMetaData[], ['album'], number> = async ({ pageParam }) => {
     const photoAlbumPagesURL = `/api/photo-post`;
 
     return await axios.get(photoAlbumPagesURL, { params: { page: pageParam } }).then(res => res.data.response.dtoList);

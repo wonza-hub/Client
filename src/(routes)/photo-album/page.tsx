@@ -30,7 +30,7 @@ export default function Page() {
         hasNextPage,
         isFetchingNextPage,
     } = useInfiniteQuery({
-        queryKey: ['albums'],
+        queryKey: ['album'],
         queryFn: getNextPhotoAlbums,
         // page 파라미터 초기값
         initialPageParam: 1,
