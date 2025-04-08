@@ -9,9 +9,9 @@ export default function usePostPhotoAlbumLike() {
     const queryClient = useQueryClient();
     const { boardId } = useParams();
 
-    return useMutation<AxiosResponse, AxiosError<IServerErrorResponse>>({
+    return useMutation<AxiosResponse, AxiosError<IServerErrorResponse>, { isLiked: boolean }>({
         // 낙관적 업데이트
-        onMutate: async () => {
+        onMutate: async ({ isLiked }) => {
             // 진행 중인 쿼리 취소
             await queryClient.cancelQueries({ queryKey: ['album', boardId] });
 
@@ -23,18 +23,14 @@ export default function usePostPhotoAlbumLike() {
             const previousLikeState = memberLiked;
             const previousLikeCount = likeCount;
 
-            // 새 상태 계산
-            const newLikeState = !previousLikeState;
-            const newLikeCount = previousLikeState ? previousLikeCount - 1 : previousLikeCount + 1;
-
-            // 캐시 데이터 업데이트
+            // 낙관적 업데이트 적용
             queryClient.setQueryData(['album', boardId], (oldData: IPhotoAlbumData) => ({
                 ...oldData,
                 photoPostDto: {
                     ...oldData.photoPostDto,
-                    likeCount: newLikeCount,
+                    likeCount: oldData.photoPostDto.likeCount + (isLiked ? -1 : 1),
                 },
-                memberLiked: newLikeState,
+                memberLiked: !oldData.memberLiked,
             }));
 
             // 백업 데이터 반환 (onError에서 사용)
@@ -43,19 +39,12 @@ export default function usePostPhotoAlbumLike() {
                 previousLikeCount,
             };
         },
-        mutationFn: () => {
-            const { memberLiked: isLiked } = queryClient.getQueryData<IPhotoAlbumData>(['album', boardId]);
-
-            return axios.post(
-                `/api/post/${isLiked ? 'like' : 'cancel-like'}`,
-                { postId: boardId },
-                {
-                    headers: { Authorization: localStorage.getItem('access_token') },
-                },
-            );
+        mutationFn: ({ isLiked }) => {
+            return axios.post(`/api/post/${isLiked ? 'cancel-like' : 'like'}`, { postId: boardId });
         },
         // 에러 시 롤백
-        onError: (_error, _variables, { previousLikeState, previousLikeCount }) => {
+        onError: (_error, { isLiked }, { previousLikeState, previousLikeCount }) => {
+            console.log(_error);
             queryClient.setQueryData(['album', boardId], (oldData: IPhotoAlbumData) => ({
                 ...oldData,
                 photoPostDto: {
@@ -64,11 +53,14 @@ export default function usePostPhotoAlbumLike() {
                 },
                 memberLiked: previousLikeState,
             }));
+
+            alert(`좋아요${isLiked ? ' 취소' : '에'} 실패했습니다.`);
         },
-        onSettled: () =>
-            queryClient.invalidateQueries({
+        onSettled: () => {
+            return queryClient.invalidateQueries({
                 queryKey: ['album', boardId],
                 // refetchType: 'none',
-            }),
+            });
+        },
     });
 }

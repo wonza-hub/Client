@@ -1,26 +1,18 @@
 // COMPONENT: 사진 게시판 게시물 좋아요 버튼
 import { FaHeart } from 'react-icons/fa';
-import { useParams } from 'react-router-dom';
 import { CircleActivationButton as Button } from '../../../../_components/button/CircleActivationButton';
-import { useCallback } from 'react';
-import { useQueryClient } from '@tanstack/react-query';
-import { IPhotoAlbumData } from '../../types';
 import usePostPhotoAlbumLike from '../../_lib/postPhotoAlbumLike';
 
-export default function PhotoAlbumLikeBtn() {
-    const { boardId } = useParams();
-    const queryClient = useQueryClient();
-
-    // 캐시에서 좋아요 수, 여부 가져오기
-    const {
-        photoPostDto: { likeCount },
-        memberLiked,
-    } = queryClient.getQueryData<IPhotoAlbumData>(['album', boardId]);
+interface IPhotoAlbumLikeBtnProps {
+    memberLiked: boolean;
+    likeCount: number;
+}
+export default function PhotoAlbumLikeBtn({ memberLiked, likeCount }: IPhotoAlbumLikeBtnProps) {
     const { mutate: updateAlbumLike } = usePostPhotoAlbumLike();
 
-    const handleButtonClick = useCallback(() => {
-        updateAlbumLike();
-    }, [updateAlbumLike]);
+    const handleButtonClick = () => {
+        updateAlbumLike({ isLiked: memberLiked });
+    };
 
     return (
         <Button
