@@ -27,7 +27,10 @@ export default function Page() {
     useEffect(() => {
         if (status === 'success') {
             setPhotos(albumData.fileDtoList);
-            setSelectedPhoto(albumData.fileDtoList[0]);
+            // selectedPhoto가 null인 경우에만 첫 번째 사진을 선택
+            if (!selectedPhoto) {
+                setSelectedPhoto(albumData.fileDtoList[0]);
+            }
         }
     }, [status, albumData]);
 
