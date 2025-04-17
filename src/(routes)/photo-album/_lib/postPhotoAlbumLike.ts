@@ -4,10 +4,14 @@ import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useParams } from 'react-router-dom';
 import { IPhotoAlbumData } from '../types';
 import { IServerErrorResponse } from '../../../_types/type';
+import { useRef } from 'react';
 
 export default function usePostPhotoAlbumLike() {
     const queryClient = useQueryClient();
     const { boardId } = useParams();
+
+    // 디바운스 타이머를 위한 ref
+    const timerRef = useRef<number | null>(null);
 
     return useMutation<AxiosResponse, AxiosError<IServerErrorResponse>, { isLiked: boolean }>({
         // 낙관적 업데이트
@@ -39,12 +43,25 @@ export default function usePostPhotoAlbumLike() {
                 previousLikeCount,
             };
         },
-        mutationFn: ({ isLiked }) => {
-            return axios.post(`/api/post/${isLiked ? 'cancel-like' : 'like'}`, { postId: boardId });
+        mutationFn: async ({ isLiked }) => {
+            // 이전 타이머가 있으면 취소
+            if (timerRef.current) {
+                clearTimeout(timerRef.current);
+            }
+
+            // 디바운스 구현
+            return new Promise<AxiosResponse>((resolve, reject) => {
+                timerRef.current = setTimeout(() => {
+                    axios
+                        .post(`/api/post/${isLiked ? 'cancel-like' : 'like'}`, { postId: boardId })
+
+                        .then(resolve)
+                        .catch(reject);
+                }, 1000);
+            });
         },
         // 에러 시 롤백
         onError: (_error, { isLiked }, { previousLikeState, previousLikeCount }) => {
-            console.log(_error);
             queryClient.setQueryData(['album', boardId], (oldData: IPhotoAlbumData) => ({
                 ...oldData,
                 photoPostDto: {
