@@ -19,6 +19,8 @@ export interface IAttendanceRanks {
 }
 
 export interface IMainPhotoBannerItem {
+    sizes: string;
+    srcset: string;
     src: string;
     link: string;
 }

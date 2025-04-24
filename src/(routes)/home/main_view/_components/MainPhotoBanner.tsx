@@ -8,7 +8,11 @@ import useInterval from '../../../../_hooks/useInterval';
 // 배너 사진 요소
 const sliderItems: IMainPhotoBannerItem[] = [
     {
-        src: '_assets/images/main-promotion-1.png',
+        src: '_assets/images/main-promotion-1_900.webp',
+        sizes: '(max-width: 2250px) 40vw, 900px',
+        srcset: `_assets/images/main-promotion-1_397.webp 397w, 
+                _assets/images/main-promotion-1_667.webp 667w, 
+                _assets/images/main-promotion-1_900.webp 900w`,
         link: null,
     },
 ];
@@ -39,6 +43,8 @@ export default memo(function MainPhotoBanner() {
                             }`}
                     >
                         <img
+                            sizes={item.sizes}
+                            srcSet={item.srcset}
                             className='MainImage h-full w-full select-none object-cover'
                             src={item.src}
                             alt='mainViewImg'
