@@ -2,11 +2,13 @@
 import SlidingPhotos from './_components/SlidingPhotos.jsx';
 import PhotoPostForm from './_components/PhotoPostForm.tsx';
 import { useGetLife4CutPhotos } from '../_lib/getLife4CutPhotos.ts';
+import { useInView } from 'react-intersection-observer';
+import { forwardRef } from 'react';
 
 interface IPageProps {
     inView: boolean; // 뷰포트 내 들어온지 여부
 }
-const PageContent = ({ inView }) => {
+const PageContent = forwardRef<HTMLDivElement, IPageProps>(({ inView }, ref) => {
     // 옵저버 감지 시 조회 api 호출
     const { data: life4CutPhotos = [], isError, isLoading } = useGetLife4CutPhotos(inView);
 
@@ -25,13 +27,18 @@ const PageContent = ({ inView }) => {
     if (isError) return <div className='w-full text-center'>사진 정보를 불러오지 못했습니다.</div>;
 
     return (
-        <div className='relative space-y-2.5 overflow-hidden'>
+        <div ref={ref} className='relative space-y-2.5 overflow-hidden'>
             <SlidingPhotos photos={life4CutPhotos} />
         </div>
     );
-};
+});
 
-export default function Page({ inView }: IPageProps) {
+export default function Page() {
+    // api 호출 위한 포토존 영역 옵저버
+    const { ref: photoZoneRef, inView } = useInView({
+        triggerOnce: true,
+    });
+
     return (
         <>
             {/* 사진 업로드 */}
@@ -40,7 +47,7 @@ export default function Page({ inView }: IPageProps) {
             </div>
 
             {/* 사진 리스트 */}
-            <PageContent inView={inView} />
+            <PageContent ref={photoZoneRef} inView={inView} />
         </>
     );
 }
