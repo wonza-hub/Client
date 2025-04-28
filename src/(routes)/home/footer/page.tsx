@@ -104,7 +104,13 @@ export default function Footer() {
                     </div>
                     {/* 네스트넷 로고 */}
                     <div className='mx-auto my-10 flex w-fit flex-col items-center xl:mt-0'>
-                        <img className='w-[16rem]' src='_assets/images/nestnet-logo.webp' alt='네스트넷 로고' />
+                        <img
+                            width={200}
+                            height={100}
+                            loading='lazy'
+                            src='_assets/images/nestnet-logo.webp'
+                            alt='네스트넷 로고'
+                        />
                         <span className='mx-auto pr-3 text-[0.9rem] text-gray-500'>소프트웨어학부 1등 학술동아리</span>
                     </div>
                 </div>

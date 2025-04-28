@@ -14,9 +14,9 @@ export default function Page() {
     }
 
     const services = [
-        new Service('_assets/images/community_board.jpg', '통합 게시판', PAGE_ROUTE.COMMUINTY),
-        new Service('_assets/images/photo-albums_board.jpg', '사진 게시판', PAGE_ROUTE.PHOTOALBUMS),
-        new Service('_assets/images/exam_board.jpg', '자료 게시판', PAGE_ROUTE.EXAM),
+        new Service('_assets/images/community_board.webp', '통합 게시판', PAGE_ROUTE.COMMUINTY),
+        new Service('_assets/images/photo-albums_board.webp', '사진 게시판', PAGE_ROUTE.PHOTOALBUMS),
+        new Service('_assets/images/exam_board.webp', '자료 게시판', PAGE_ROUTE.EXAM),
     ];
 
     const { ref: observeCardRef, inView } = useInView();
