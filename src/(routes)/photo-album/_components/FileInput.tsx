@@ -8,10 +8,12 @@ import { ORIGINAL_FILE_FLAG } from '../../../_constants/constants';
 import { nanoid } from 'nanoid';
 import { IExistingFileDto, IUploadedFileDto } from '../types';
 import { UPLOAD_FILE_SIZE_MAX_LIMIT } from '../../../_constants/constants';
-import { resizeFile } from '../../../_utils/resizeFile';
 import { useFormContext, useWatch } from 'react-hook-form';
+import resizeImageFile from '../../../_utils/resizeImageFile';
+import loadImage from '../../../_utils/loadImage';
 
 const uploadSizeLimit = UPLOAD_FILE_SIZE_MAX_LIMIT * 1024 * 1024;
+const FIXED_WIDTH = 600; // 원하는 고정 가로 크기(px)
 
 // TYPE GUARD: Promise 이행 상태 타입 체크
 const isRejected = (input: PromiseSettledResult<unknown>): input is PromiseRejectedResult =>
@@ -52,23 +54,29 @@ export default memo(function FileInput({ existingFiles, existingFileIds, setExis
         try {
             const filePromises = sizeFilteredUploadedFiles.map(async uploadedFile => {
                 try {
-                    const resizedFile = await resizeFile({
+                    // 1) 이미지 로드해서 원본 비율 얻기
+                    const img = await loadImage(uploadedFile);
+                    const { naturalWidth: origW, naturalHeight: origH } = img;
+                    // 2) 비율 유지하며 세로 크기 계산
+                    const computedHeight = Math.round((origH / origW) * FIXED_WIDTH);
+                    // 3) 이미지 리사이즈
+                    const resizedFile = await resizeImageFile({
                         file: uploadedFile,
-                        targetHeight,
-                        targetWidth,
+                        targetWidth: FIXED_WIDTH,
+                        targetHeight: computedHeight,
                         compressFormat: 'WEBP',
-                        quality: 70,
+                        quality: 75,
                     });
+
                     return {
                         id: nanoid(),
                         file: resizedFile,
                     };
                 } catch (err) {
                     console.error('🚀 ~ file resize error ~ err:', err);
-                    throw err; // 오류를 throw하여 allSettled에서 'rejected' 처리
+                    throw err; // allSettled의 rejected 처리로 넘겨줌
                 }
             });
-
             const results = await Promise.allSettled(filePromises);
             const successfulFiles = results.filter(isFulfilled).map(result => result.value);
             const failedFiles = results.filter(isRejected);
