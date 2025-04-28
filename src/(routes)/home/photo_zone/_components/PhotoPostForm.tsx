@@ -5,12 +5,25 @@ import { TbCameraSelfie } from 'react-icons/tb';
 import { FaCloudUploadAlt } from 'react-icons/fa';
 import { MdOutlineCancel } from 'react-icons/md';
 import LoadingSpinner from '../../../../_components/loadingSpinner/LoadingSpinner';
+import resizeFile from '../../../../_utils/resizeImageFile';
 
 const FileInput = ({ file, setFile, setFileName, isPending, fileInputRef }) => {
-    const handleFileChange = ({ target: { files } }) => {
+    const handleFileChange = async ({ target: { files } }) => {
         if (files[0]) {
-            setFileName(files[0].name);
-            setFile(files[0]);
+            try {
+                const resizedFile = await resizeFile({
+                    file: files[0],
+                    targetWidth: 300,
+                    targetHeight: 450,
+                    compressFormat: 'WEBP',
+                    quality: 70,
+                });
+                setFileName(resizedFile.name);
+                setFile(resizedFile);
+            } catch (err) {
+                console.error('Error resizing file:', err);
+                alert('인생네컷 업로드에 실패했습니다.');
+            }
         }
     };
 
@@ -79,6 +92,7 @@ export default function PhotoPostForm() {
         formData.append('file', file);
         createPhoto(formData);
         setFile(null);
+        alert('인생네컷 업로드에 성공했습니다.');
     };
 
     // HANDLER: 업로드 취소
@@ -90,14 +104,14 @@ export default function PhotoPostForm() {
 
     return (
         <form encType='multipart/form-data' onSubmit={handlePhotoCreate} className='h-fit'>
-            <FileInput
-                file={file}
-                setFile={setFile}
-                setFileName={setFileName}
-                isPending={isPhotoPending}
-                fileInputRef={fileInputRef}
-            />
             <div className='flex h-fit flex-row gap-1'>
+                <FileInput
+                    file={file}
+                    setFile={setFile}
+                    setFileName={setFileName}
+                    isPending={isPhotoPending}
+                    fileInputRef={fileInputRef}
+                />
                 <UploadButtons
                     file={file}
                     isPending={isPhotoPending}
