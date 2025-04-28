@@ -92,7 +92,6 @@ export default function PhotoPostForm() {
         formData.append('file', file);
         createPhoto(formData);
         setFile(null);
-        alert('인생네컷 업로드에 성공했습니다.');
     };
 
     // HANDLER: 업로드 취소

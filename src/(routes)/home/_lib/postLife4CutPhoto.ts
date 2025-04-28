@@ -9,7 +9,10 @@ export const usePostLife4CutPhoto = () => {
 
     return useMutation<AxiosResponse, AxiosError, FormData>({
         mutationFn: async fileFormData => await axios.post(photoZoneURL, fileFormData),
-        onSuccess: () => queryClient.invalidateQueries({ queryKey: ['photo-zone'] }),
+        onSuccess: () => {
+            alert('인생네컷 업로드에 성공했습니다.');
+            return queryClient.invalidateQueries({ queryKey: ['photo-zone'] });
+        },
         onError: async e => {
             let errorMessage = '알 수 없는 에러가 발생했습니다. 관리자에게 문의해주세요.';
 
