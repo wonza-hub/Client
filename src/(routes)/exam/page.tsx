@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 import getExamBoards from './_lib/getExamBoards.ts';
 import useExamSearchFilterStore from '../../_stores/useExamSearchFilterStore';
 import SearchFilterArea from './_components/SearchFilterArea';

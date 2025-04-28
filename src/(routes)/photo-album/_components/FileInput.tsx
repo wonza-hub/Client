@@ -48,10 +48,17 @@ export default memo(function FileInput({ existingFiles, existingFileIds, setExis
             return uploadedFileItem.size < uploadSizeLimit;
         });
 
+        // 파일 리사이징 (임시)
         try {
             const filePromises = sizeFilteredUploadedFiles.map(async uploadedFile => {
                 try {
-                    const resizedFile = await resizeFile(uploadedFile);
+                    const resizedFile = await resizeFile({
+                        file: uploadedFile,
+                        targetHeight,
+                        targetWidth,
+                        compressFormat: 'WEBP',
+                        quality: 70,
+                    });
                     return {
                         id: nanoid(),
                         file: resizedFile,
@@ -60,7 +67,6 @@ export default memo(function FileInput({ existingFiles, existingFileIds, setExis
                     console.error('🚀 ~ file resize error ~ err:', err);
                     throw err; // 오류를 throw하여 allSettled에서 'rejected' 처리
                 }
-                return null; // 크기 제한 미만인 경우 null 반환 (이후 필터링에서 제외)
             });
 
             const results = await Promise.allSettled(filePromises);

@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useCallback, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { FaHeart, FaRegHeart } from 'react-icons/fa';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 
 interface Props {
     boardId: string;
