@@ -1,10 +1,9 @@
 import { useMutation } from '@tanstack/react-query';
 import axios, { AxiosError, AxiosResponse } from 'axios';
-import { PAGE_ROUTE, TIME_OUT } from '../../../_constants/constants';
+import { TIME_OUT } from '../../../_constants/constants';
 import isServerError from '../../../_errors/isServerError';
-import { NavigateFunction } from 'react-router-dom';
 
-const useCreatePhotoAlbumPost = (navigate: NavigateFunction) => {
+const useCreatePhotoAlbumPost = () => {
     const photoAlbumPostURL = `/api/photo-post/post`;
 
     return useMutation<AxiosResponse, AxiosError, FormData>({

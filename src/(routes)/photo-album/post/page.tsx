@@ -1,13 +1,11 @@
 // PAGE: 앨범 게시물 등록 페이지
 import PhotoAlbumForm from '../_components/PhotoAlbumForm';
-import { useNavigate } from 'react-router-dom';
 import { INewPhotoAlbumFormData } from '../types';
 import { SubmitHandler } from 'react-hook-form';
 import useCreatePhotoAlbumPost from '../_lib/postPhotoAlbumPost';
 
 export default function Page() {
-    const navigate = useNavigate();
-    const { mutate: createPhotoAlbumPost, isPending: isPhotoAlbumCreationPending } = useCreatePhotoAlbumPost(navigate);
+    const { mutate: createPhotoAlbumPost, isPending: isPhotoAlbumCreationPending } = useCreatePhotoAlbumPost();
 
     // HANDLER: 폼 제출 핸들러
     const handlePostFormSubmit: SubmitHandler<INewPhotoAlbumFormData> = async data => {
