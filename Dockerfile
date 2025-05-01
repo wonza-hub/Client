@@ -16,10 +16,6 @@ RUN apk add --update --no-cache \
     && cd ../nginx-${version} \
     && ./configure --add-dynamic-module=../ngx_brotli --with-compat --with-file-aio --with-threads \
     && make modules
-    
-# Brotli 모듈 복사
-COPY --from=builder /usr/src/app/nginx-${version}/objs/ngx_http_brotli_filter_module.so /usr/lib/nginx/modules/
-COPY --from=builder /usr/src/app/nginx-${version}/objs/ngx_http_brotli_static_module.so /usr/lib/nginx/modules/
 
 # Node 빌드 설정
 FROM node:alpine AS node_builder
@@ -35,6 +31,9 @@ FROM nginx:${version}-alpine
 
 ARG version
 
+# Brotli 모듈 복사
+COPY --from=builder /usr/src/app/nginx-${version}/objs/ngx_http_brotli_filter_module.so /usr/lib/nginx/modules/
+COPY --from=builder /usr/src/app/nginx-${version}/objs/ngx_http_brotli_static_module.so /usr/lib/nginx/modules/
 
 # 앱 빌드 결과물 복사
 COPY --from=node_builder /usr/src/app/dist /usr/share/nginx/html
