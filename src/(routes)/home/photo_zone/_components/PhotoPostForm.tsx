@@ -16,7 +16,7 @@ const FileInput = ({ file, setFile, setFileName, isPending, fileInputRef }) => {
                     targetWidth: 300,
                     targetHeight: 450,
                     compressFormat: 'WEBP',
-                    quality: 70,
+                    quality: 80,
                 });
                 setFileName(resizedFile.name);
                 setFile(resizedFile);
