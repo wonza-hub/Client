@@ -1,9 +1,19 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "tailwindcss";
+import { compression } from "vite-plugin-compression2";
+import { visualizer } from "rollup-plugin-visualizer";
 
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    compression({
+      algorithm: "brotliCompress",
+    }),
+    compression({
+      algorithm: "gzip",
+    }),
+  ],
   build: {
     outDir: "dist",
     assetsDir: "_assets",
@@ -17,6 +27,13 @@ export default defineConfig({
           }
         },
       },
+      plugins: [
+        visualizer({
+          open: true,
+          gzipSize: true,
+          brotliSize: true,
+        }),
+      ],
     },
   },
   server: {
