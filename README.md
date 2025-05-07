@@ -42,6 +42,10 @@ NestNet
     yarn install
     yarn vite
 ```
+###### 아키텍쳐
+<div align="center">
+    <img src="https://github.com/user-attachments/assets/dff81261-4259-4f2d-9766-9ca05680315e" width="720px"/>
+</div>
 
 ---
 
