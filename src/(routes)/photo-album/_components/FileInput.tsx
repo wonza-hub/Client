@@ -4,17 +4,18 @@ import { MdUpload } from 'react-icons/md';
 import { FaTrash, FaCompress } from 'react-icons/fa';
 import { AiFillFileImage } from 'react-icons/ai';
 import { StringCombinator } from '../../../_utils/StringCombinator';
-import { ORIGINAL_FILE_FLAG } from '../../../_constants/constants';
+import { FIXED_RESIZED_IMAGE_WIDTH, ORIGINAL_FILE_FLAG } from '../../../_constants/constants';
 import { nanoid } from 'nanoid';
 import { IExistingFileDto, IUploadedFileDto } from '../types';
-import { UPLOAD_FILE_SIZE_MAX_LIMIT } from '../../../_constants/constants';
 import { useFormContext, useWatch } from 'react-hook-form';
 import resizeImageFile from '../../../_utils/resizeImageFile';
 import loadImage from '../../../_utils/loadImage';
+import { filterBigSizeFiles } from '../../../_utils/filterBigSizeFiles';
 
-const uploadSizeLimit = UPLOAD_FILE_SIZE_MAX_LIMIT * 1024 * 1024;
-const FIXED_WIDTH = 600; // 원하는 고정 가로 크기(px)
-
+// TYPE GUARD: 게시물 수정 시 기존 파일 여부 체크
+const isExistingFileDto = (fileItem: any): fileItem is IExistingFileDto => {
+    return ORIGINAL_FILE_FLAG in fileItem;
+};
 // TYPE GUARD: Promise 이행 상태 타입 체크
 const isRejected = (input: PromiseSettledResult<unknown>): input is PromiseRejectedResult =>
     input.status === 'rejected';
@@ -29,7 +30,10 @@ interface IFileInputProps {
 
 export default memo(function FileInput({ existingFiles, existingFileIds, setExistingFileIds }: IFileInputProps) {
     const { register, setValue } = useFormContext();
-    const watchedFiles = useWatch({ name: 'files', defaultValue: [...(existingFiles || [])] });
+    const watchedFiles: (IExistingFileDto | IUploadedFileDto)[] = useWatch({
+        name: 'files',
+        defaultValue: existingFiles ?? [], // 초기 값으로 기존 파일들을 설정
+    });
 
     const [compressing, setCompressing] = useState(false);
 
@@ -42,13 +46,7 @@ export default memo(function FileInput({ existingFiles, existingFileIds, setExis
     const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         setCompressing(true);
         const uploadedFiles = event.currentTarget.files;
-        const sizeFilteredUploadedFiles = Array.from(uploadedFiles).filter(uploadedFileItem => {
-            if (uploadedFileItem.size >= uploadSizeLimit) {
-                alert(`크기가 ${UPLOAD_FILE_SIZE_MAX_LIMIT}MB 이상인 파일의 경우 업로드가 제한됩니다.`);
-            }
-
-            return uploadedFileItem.size < uploadSizeLimit;
-        });
+        const sizeFilteredUploadedFiles = filterBigSizeFiles(uploadedFiles);
 
         // 파일 리사이징 (임시)
         try {
@@ -58,14 +56,13 @@ export default memo(function FileInput({ existingFiles, existingFileIds, setExis
                     const img = await loadImage(uploadedFile);
                     const { naturalWidth: origW, naturalHeight: origH } = img;
                     // 2) 비율 유지하며 세로 크기 계산
-                    const computedHeight = Math.round((origH / origW) * FIXED_WIDTH);
+                    const computedHeight = Math.round((origH / origW) * FIXED_RESIZED_IMAGE_WIDTH);
                     // 3) 이미지 리사이즈
                     const resizedFile = await resizeImageFile({
                         file: uploadedFile,
-                        targetWidth: FIXED_WIDTH,
+                        targetWidth: FIXED_RESIZED_IMAGE_WIDTH,
                         targetHeight: computedHeight,
                         compressFormat: 'WEBP',
-                        quality: 75,
                     });
 
                     return {
@@ -109,14 +106,14 @@ export default memo(function FileInput({ existingFiles, existingFileIds, setExis
 
     // HANDLER: 파일 삭제
     const handleFileDelete = (targetFileId: number | string) => {
-        // 파일 삭제시 기존 파일 아이디를 저장한 리스트에서 해당 파일 아이디를 삭제
+        // 파일 삭제 시 기존 파일 아이디를 저장한 리스트에서 해당 파일 아이디를 삭제
         if (existingFileIds) {
             setExistingFileIds(existingFileIds.filter(id => id !== targetFileId));
         }
 
         setValue(
             'files',
-            watchedFiles.filter(uploadedFile => uploadedFile.id !== targetFileId),
+            watchedFiles.filter(watchedFileItem => watchedFileItem.id !== targetFileId),
         );
     };
 
@@ -166,20 +163,17 @@ export default memo(function FileInput({ existingFiles, existingFileIds, setExis
                                     }
                                 >
                                     {/* 기존 사진 파일인 경우와 새로 업로드하는 파일 src 구분 */}
-                                    {ORIGINAL_FILE_FLAG in fileItem ? (
+                                    {isExistingFileDto(fileItem) ? (
                                         <img
                                             className='object-scale-down object-center'
                                             src={StringCombinator.getImageURL(
-                                                (fileItem as IExistingFileDto).saveFilePath,
-                                                (fileItem as IExistingFileDto).saveFileName,
+                                                fileItem.saveFilePath,
+                                                fileItem.saveFileName,
                                             )}
                                             alt='기존사진'
                                         />
                                     ) : (
-                                        <img
-                                            src={URL.createObjectURL((fileItem as IUploadedFileDto).file)}
-                                            alt='업로드된 사진'
-                                        />
+                                        <img src={URL.createObjectURL(fileItem.file)} alt='업로드된 사진' />
                                     )}
                                     {/* 업로드 취소 버튼 */}
                                     <button
