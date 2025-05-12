@@ -6,7 +6,7 @@ interface IResizeFileProps {
     targetWidth: number;
     targetHeight: number;
     compressFormat: 'JPEG' | 'PNG' | 'WEBP';
-    quality: number; // 압축 품질 (0~100)
+    quality?: number; // 압축 품질 (0~100)
 }
 
 export default function resizeImageFile({
