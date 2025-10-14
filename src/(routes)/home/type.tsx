@@ -18,6 +18,10 @@ export interface IAttdRanks {
     monthlyStatisticsDtoList: IMonthlyAttdRank[];
 }
 
+export interface IMainPhotoBannerItem {
+    src: string;
+    link: string;
+}
 export interface ILinkBannerItem {
     title: string;
     src: string;
@@ -27,13 +31,4 @@ export interface ILinkBannerItem {
 export interface ISlidingPhoto {
     saveFilePath: string;
     saveFileName: string;
-}
-
-export interface IPhotoPostResponse {
-    success: boolean;
-    response: object;
-    error: {
-        status: string;
-        message: string;
-    };
 }

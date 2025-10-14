@@ -11,10 +11,17 @@ export default function PrivateLayout() {
     const pathname = useLocation().pathname;
     const { reset } = useQueryErrorResetBoundary();
 
+    //TODO
+    // 로그인한 후 사용자 권한 전역 상태로 저장하기
+
     return (
         <div>
             {!(pathname.includes('/admin') && pathname.split('/')[1] === 'admin') && <GlobalNavbar />}
-            <ErrorBoundary key={pathname} onReset={reset} FallbackComponent={GlobalApiErrorFallback}>
+            <ErrorBoundary
+                key={pathname + new Date().getTime()}
+                onReset={reset}
+                FallbackComponent={GlobalApiErrorFallback}
+            >
                 <Outlet />
             </ErrorBoundary>
         </div>

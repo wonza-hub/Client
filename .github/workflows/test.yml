@@ -1,0 +1,135 @@
+name: Test - Server Operations
+
+on:
+  workflow_dispatch:
+    inputs:
+      test_type:
+        description: "Type of test to run"
+        required: true
+        default: "file_creation"
+        type: choice
+        options:
+          - file_creation
+          - health_check
+          - log_check
+          - cleanup
+          - deploy
+      file_name:
+        description: "Name of test file to create (for file_creation test)"
+        required: false
+        default: "test-deployment.txt"
+      message:
+        description: "Message to write in test file"
+        required: false
+        default: "Test deployment successful"
+
+jobs:
+  test-operations:
+    name: Test Server Operations
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Update Client repository
+        run: |
+          echo "=== Pulling latest frontend source from Client directory ==="
+          cd ~/Client
+          if [ -d .git ]; then
+              git fetch --all
+              git reset --hard origin/main
+              git pull origin main
+              echo "✅ Client repository successfully updated."
+          else
+              echo "❌ No .git directory found in ~/Client. Please check repository clone path."
+          fi
+          echo "Current branch: $(git branch --show-current)"
+          echo "Current commit:"
+          git log -1 --oneline
+
+      - name: File Creation Test
+        if: ${{ github.event.inputs.test_type == 'file_creation' }}
+        run: |
+          mkdir -p ~/test
+          cd ~/test
+
+          echo '${{ github.event.inputs.message }}' > ${{ github.event.inputs.file_name }}
+          echo 'Timestamp: $(date)' >> ${{ github.event.inputs.file_name }}
+          echo 'GitHub SHA: ${{ github.sha }}' >> ${{ github.event.inputs.file_name }}
+          echo 'Created by: GitHub Actions (Self-hosted)' >> ${{ github.event.inputs.file_name }}
+
+          echo 'Test file created successfully:'
+          cat ${{ github.event.inputs.file_name }}
+          echo "Current directory: $(pwd)"
+
+      - name: Health Check Test
+        if: ${{ github.event.inputs.test_type == 'health_check' }}
+        run: |
+          mkdir -p ~/test
+          cd ~/test
+
+          echo '=== Docker Compose Status ==='
+          docker-compose ps || echo "docker-compose not found or no services running"
+
+          echo '=== Container Health ==='
+          docker stats --no-stream || echo "docker stats failed"
+
+          echo '=== Disk Usage ==='
+          df -h
+
+          echo '=== Memory Usage ==='
+          free -h
+
+          echo '=== Network Connectivity ==='
+          curl -f http://localhost:8080/actuator/health || echo 'Backend health check failed'
+          echo "Current directory: $(pwd)"
+
+      - name: Log Check Test
+        if: ${{ github.event.inputs.test_type == 'log_check' }}
+        run: |
+          mkdir -p ~/test
+          cd ~/test
+
+          echo '=== Backend Logs (Last 50 lines) ==='
+          docker-compose logs --tail=50 backend || echo "backend logs not available"
+
+          echo '=== Nginx Logs (Last 20 lines) ==='
+          docker-compose logs --tail=20 nginx || echo "nginx logs not available"
+
+          echo '=== Database Logs (Last 20 lines) ==='
+          docker-compose logs --tail=20 db || echo "db logs not available"
+
+          echo "Current directory: $(pwd)"
+
+      - name: Deploy Application
+        if: ${{ github.event.inputs.test_type == 'deploy' }}
+        run: |
+          echo "=== Starting CD process ==="
+
+          # 1️⃣ Client 최신 코드 pull
+          cd ~/Client
+          echo "--- Updating Client repository ---"
+          git fetch --all
+          git reset --hard origin/main
+          git pull origin main
+
+          # 2️⃣ Docker Compose 배포
+          echo "--- Deploying containers ---"
+          docker compose pull
+          docker compose up -d --build
+
+          # 3️⃣ 불필요한 이미지 정리
+          echo "--- Cleaning unused images ---"
+          docker image prune -af
+
+          # 4️⃣ 배포 상태 확인
+          echo "=== Deployment completed successfully ==="
+          docker compose ps
+
+      - name: Cleanup Test
+        if: ${{ github.event.inputs.test_type == 'cleanup' }}
+        run: |
+          echo "Cleaning up test files..."
+          rm -rf ~/test/*
+          echo "Cleanup complete."

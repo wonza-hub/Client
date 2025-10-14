@@ -5,21 +5,24 @@ import { IExistingFileDto } from '../../types';
 
 interface IProps {
     photos: IExistingFileDto[];
-    setSelectedPhoto: Dispatch<SetStateAction<string>>;
+    setSelectedPhoto: Dispatch<SetStateAction<IExistingFileDto>>;
 }
 
 export default memo(function UnselectedPhotos({ photos, setSelectedPhoto }: IProps) {
     // 클릭된 사진으로 선택된 사진 변경하는 핸들러
-    const handleUnselectedPhotoClick = (photoPath: string) => {
-        setSelectedPhoto(photoPath);
+    const handleUnselectedPhotoClick = (clickedPhoto: IExistingFileDto) => {
+        setSelectedPhoto(clickedPhoto);
     };
 
     // LOADING: 스켈레톤 효과 표시
-    if (!photos) {
+    if (photos.length === 0) {
         return (
             <div className='flex h-screen w-full flex-col items-center justify-between'>
                 {Array.from(new Array(4)).map((_, idx) => (
-                    <div key={idx} className='mb-4 h-[12rem] w-full animate-pulse rounded-lg bg-skeleton'></div>
+                    <div
+                        key={idx}
+                        className='mb-4 h-[12rem] w-full animate-pulse rounded-lg bg-skeleton shadow-[rgba(50,50,93,0.25)_0px_6px_12px_-2px,_rgba(0,0,0,0.3)_0px_3px_7px_-3px]'
+                    />
                 ))}
             </div>
         );
@@ -40,11 +43,7 @@ export default memo(function UnselectedPhotos({ photos, setSelectedPhoto }: IPro
                         />
                         <div
                             className='ImageCover absolute left-0 top-0 flex h-full w-full flex-col items-center justify-center bg-black text-center text-sm text-white opacity-0 duration-300 ease-in-out hover:cursor-pointer hover:opacity-75'
-                            onClick={() =>
-                                handleUnselectedPhotoClick(
-                                    StringCombinator.getImageURL(photo.saveFilePath, photo.saveFileName),
-                                )
-                            }
+                            onClick={() => handleUnselectedPhotoClick(photo)}
                         >
                             <FaMagnifyingGlass className={'text-4xl'} />
                         </div>

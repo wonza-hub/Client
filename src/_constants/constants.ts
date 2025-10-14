@@ -1,8 +1,11 @@
 // 기존 등록 사진 여부
 export const ORIGINAL_FILE_FLAG: string = 'originalFileName';
 
-// 사진게시판 사진 파일 제한 용량
-export const FILE_SIZE_MAX_LIMIT = 5 * 1024 * 1024;
+// 사진게시판 사진 파일 제한 용량 (메가바이트)
+export const FILE_SIZE_MAX_LIMIT = 10;
+
+// 요청 타임아웃
+export const TIME_OUT = 5000;
 
 // 페이지 라우팅
 export const PAGE_ROUTE = Object.freeze({
@@ -19,7 +22,7 @@ export const PAGE_ROUTE = Object.freeze({
 });
 
 // 권한
-const AVAIL_AUTHORITY = ['회장', '부회장', '관리자', '재학생', '휴학생', '졸업생'];
+export const AVAIL_AUTHORITY = ['회장', '부회장', '관리자', '재학생', '휴학생', '졸업생'];
 // 권한 영->한 전환
 export const AUTHORITY_ENG_TO_KOR = Object.freeze({
     PRESIDENT: '회장',
@@ -47,7 +50,7 @@ export const AUTHORITY_KOR_TO_ENG = Object.freeze({
 
 // 동아리원 목록, 회원가입 요청 목록 테이블 컬럼
 export const TABLE_COL_NAME = Object.freeze({
-    member: (validationErrors: Record<string, string | undefined>) => [
+    member: [
         {
             accessorKey: 'name',
             header: '성명',
@@ -99,8 +102,8 @@ export const TABLE_COL_NAME = Object.freeze({
             maxSize: 50,
             muiEditTextFieldProps: {
                 select: true,
-                error: !!validationErrors?.state,
-                helperText: validationErrors?.state,
+                // error: !!validationErrors?.state,
+                // helperText: validationErrors?.state,
             },
         },
     ],
