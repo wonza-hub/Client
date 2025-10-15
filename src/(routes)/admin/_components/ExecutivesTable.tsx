@@ -133,7 +133,7 @@ export default function ExecutivesTable() {
 
     return (
         <>
-            <div className={'px-7 py-5'}>
+            <div className={'py-5'}>
                 <MaterialReactTable table={table} />
             </div>
             <ExecutiveAddModal

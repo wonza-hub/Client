@@ -10,9 +10,9 @@ export default function SliderArrowBtn({ moveSlide, direction }: IProps) {
         <>
             <button onClick={moveSlide}>
                 {direction === 'next' ? (
-                    <IoIosArrowForward className='text-3xl text-secondary' />
+                    <IoIosArrowForward aria-label='다음 내용 보기' className='text-3xl text-secondary' />
                 ) : (
-                    <IoIosArrowBack className='text-3xl text-secondary' />
+                    <IoIosArrowBack aria-label='이전 내용 보기' className='text-3xl text-secondary' />
                 )}
             </button>
         </>

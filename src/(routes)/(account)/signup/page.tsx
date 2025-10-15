@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { omit } from 'lodash';
+import omit from 'lodash/omit';
 import { MouseEventHandler, useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FormProvider, useForm, SubmitHandler } from 'react-hook-form';

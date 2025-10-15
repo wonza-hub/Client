@@ -3,12 +3,15 @@ import UnauthorizedErrorPage from './UnauthorizedErrorPage';
 import ForbiddenErrorPage from './ForbiddenErrorPage';
 import NotFoundErrorPage from './NotFoundErrorPage';
 import ServerErrorPage from './ServerErrorPage';
+import NetworkErrorPage from './NetworkErrorPage';
 
 // @ts-ignore
 export default function GlobalApiErrorFallback({ error, resetErrorBoundary }) {
     const err = error as AxiosError;
-    // const errorStatusCode: number = 403;
     const errorStatusCode = err?.response?.status;
+    if (error.message === 'Network Error') {
+        return <NetworkErrorPage retry={resetErrorBoundary} />;
+    }
 
     switch (errorStatusCode) {
         case 401:

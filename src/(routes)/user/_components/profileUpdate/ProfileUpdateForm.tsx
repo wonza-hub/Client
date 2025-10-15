@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 import { useQueryClient } from '@tanstack/react-query';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { EMAIL_REGEXP, ID_REGEXP } from '../../../../_constants/accountRegexp/accountRegexps.ts';

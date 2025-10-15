@@ -1,3 +1,4 @@
+// COMPONENT: 메인페이지 푸터
 import { Link } from 'react-router-dom';
 import { PAGE_ROUTE } from '../../../_constants/constants';
 
@@ -31,7 +32,7 @@ export default function Footer() {
         new Content('족보 게시판', PAGE_ROUTE.EXAM),
     ];
 
-    const sns = [new Content('인스타그램', 'https://www.instagram.com/nestnet_/', '_assets/images/instagram.png')];
+    const sns = [new Content('인스타그램', 'https://www.instagram.com/nestnet_/', '_assets/images/instagram.webp')];
 
     const lifes = [new Content('공지사항', PAGE_ROUTE.NOTICE), new Content('자기 소개', PAGE_ROUTE.ABOUT_ME)];
 
@@ -43,11 +44,15 @@ export default function Footer() {
                         <div className='md:grid md:grid-cols-2 md:gap-8'>
                             <div className='col-span-2'>
                                 {/* 학교 관련 페이지 바로가기 링크 */}
-                                <h4 className='mb-2 text-gray-800'>바로가기</h4>
+                                <h1 className='mb-2 text-gray-800'>바로가기</h1>
                                 <ul className='text-sm text-gray-500 dark:text-gray-400'>
                                     {links.map((link, idx) => (
                                         <li key={idx} className='mb-1'>
-                                            <Link to={link.link} target='_blank'>
+                                            <Link
+                                                to={link.link}
+                                                target='_blank'
+                                                aria-label={`${link.title} 사이트 바로가기`}
+                                            >
                                                 <span className='text-sm text-gray-500'>{link.title}</span>
                                             </Link>
                                         </li>
@@ -58,7 +63,7 @@ export default function Footer() {
                         <div className='grid grid-cols-3 gap-8'>
                             {/* 홈페이지 내 소개 바로가기 링크 */}
                             <div>
-                                <h4 className='mb-2 text-gray-800'>소개</h4>
+                                <h1 className='mb-2 text-gray-800'>소개</h1>
                                 <ul>
                                     {introductions.map((introduction, idx) => (
                                         <li key={idx} className='mb-1'>
@@ -71,7 +76,7 @@ export default function Footer() {
                             </div>
                             {/* 홈페이지 내 게시판 바로가기 링크 */}
                             <div>
-                                <h4 className='mb-2 text-gray-800'>게시판</h4>
+                                <h1 className='mb-2 text-gray-800'>게시판</h1>
                                 <ul>
                                     {boards.map((board, idx) => (
                                         <li key={idx} className='mb-1'>
@@ -84,7 +89,7 @@ export default function Footer() {
                             </div>
                             {/* 홈페이지 내 생활 바로가기 링크 */}
                             <div>
-                                <h4 className='mb-2 text-gray-800'>생활</h4>
+                                <h1 className='mb-2 text-gray-800'>생활</h1>
                                 <ul>
                                     {lifes.map((life, idx) => (
                                         <li key={idx} className='mb-1'>
@@ -99,7 +104,13 @@ export default function Footer() {
                     </div>
                     {/* 네스트넷 로고 */}
                     <div className='mx-auto my-10 flex w-fit flex-col items-center xl:mt-0'>
-                        <img className='w-[16rem]' src='_assets/images/nestnet-logo.png' alt='네스트넷 로고' />
+                        <img
+                            width={200}
+                            height={100}
+                            loading='lazy'
+                            src='_assets/images/nestnet-logo.webp'
+                            alt='네스트넷 로고'
+                        />
                         <span className='mx-auto pr-3 text-[0.9rem] text-gray-500'>소프트웨어학부 1등 학술동아리</span>
                     </div>
                 </div>
@@ -125,8 +136,8 @@ export default function Footer() {
                     {/* <div className='my-2'>sns</div> */}
                     {sns.map((item, idx) => (
                         <span key={idx}>
-                            <Link to={item.link} target='_blank'>
-                                <img className='mt-5 h-7 w-7' src={item.imgSrc} alt='instagram' />
+                            <Link to={item.link} target='_blank' aria-label={`네스트넷 인스타그램`}>
+                                <img className='mt-5 h-7 w-7' src={item.imgSrc} alt='네스트넷 인스타그램' />
                             </Link>
                         </span>
                     ))}

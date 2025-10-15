@@ -1,5 +1,6 @@
 import { MRT_Row } from 'material-react-table';
 
+// 회원
 export interface IMember {
     id?: number;
     name: string;
@@ -10,12 +11,15 @@ export interface IMember {
     graduateYear: number;
     memberAuthority: string;
 }
-
+export interface IUpdatedMember {
+    updatedMemberId: number;
+    updatedValues: IMember;
+}
 export interface IEditProps {
     row: MRT_Row<IMember>;
     values: IMember;
 }
-
+// 회원가입 요청
 export interface ISignupReq {
     name: string;
     loginId: string;

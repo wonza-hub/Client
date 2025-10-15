@@ -5,20 +5,22 @@ export interface INewPost {
     createdTime: number[];
 }
 
-export interface IWeeklyAttdRank {
+export interface IWeeklyAttendanceRank {
     memberName: string;
     point: number;
 }
-export interface IMonthlyAttdRank {
+export interface IMonthlyAttendanceRank {
     memberName: string;
     point: number;
 }
-export interface IAttdRanks {
-    weeklyStatisticsDtoList: IWeeklyAttdRank[];
-    monthlyStatisticsDtoList: IMonthlyAttdRank[];
+export interface IAttendanceRanks {
+    weeklyStatisticsDtoList: IWeeklyAttendanceRank[];
+    monthlyStatisticsDtoList: IMonthlyAttendanceRank[];
 }
 
 export interface IMainPhotoBannerItem {
+    sizes: string;
+    srcset: string;
     src: string;
     link: string;
 }

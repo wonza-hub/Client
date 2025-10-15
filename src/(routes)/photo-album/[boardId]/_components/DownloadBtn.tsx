@@ -1,37 +1,29 @@
+// COMPONENT: 사진 다운로드 버튼
 import { FiDownload } from 'react-icons/fi';
 import { CircleActivationButton as Button } from '../../../../_components/button/CircleActivationButton';
 import { StringExtractor } from '../../../../_utils/StringExtractor';
 import { IExistingFileDto } from '../../types';
-import axios from 'axios';
+import useGetDownloadedFile from '../../_lib/getDownloadedFile';
+import downloadFromTempDownloadUrl from '../../../../_utils/downloadFromTempDownloadUrl';
 
 export default function DownloadBtn({ selectedPhoto }: { selectedPhoto: IExistingFileDto }) {
-    // 사진 다운로드 버튼 핸들러
+    const { refetch, isFetching } = useGetDownloadedFile(selectedPhoto?.id);
+
+    // HANDLER: 사진 다운로드 버튼 핸들러
     const handleDownloadBtnClick = async () => {
+        const { data: rawData } = await refetch();
         const fileName = StringExtractor.extractFileName(selectedPhoto.originalFileName);
-        const downloadFile = await axios
-            .get(`/api/file?fileId=${selectedPhoto.id}`, {
-                responseType: 'blob',
-            })
-            .then(response => response.data)
-            .catch(() => window.alert('사진 저장에 실패하였습니다.'));
 
-        if (downloadFile) {
-            const fileBlob = new Blob([downloadFile], {
-                type: 'application/octet-stream',
-            });
-            const tempFileURL = URL.createObjectURL(fileBlob);
-            const $aElement = document.createElement('a');
-
-            $aElement.download = fileName;
-            $aElement.href = tempFileURL;
-            $aElement.hidden = true;
-
-            $aElement.click();
-            $aElement.remove();
-
-            URL.revokeObjectURL(tempFileURL);
+        if (rawData) {
+            downloadFromTempDownloadUrl(rawData, fileName);
         }
     };
 
-    return <Button onClick={() => handleDownloadBtnClick()} content={<FiDownload className='text-3xl' />} />;
+    return (
+        <Button
+            disabled={isFetching}
+            onClick={() => handleDownloadBtnClick()}
+            content={<FiDownload className='text-3xl' />}
+        />
+    );
 }

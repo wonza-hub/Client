@@ -1,26 +1,30 @@
-import { memo } from 'react';
+// COMPONENT: 게시물 제목 및 설명 input
 import { useFormContext } from 'react-hook-form';
 
-interface DescriptionData {
+interface IDescriptionData {
     title: string;
     bodyContent: string;
 }
 
-export default memo(function DescriptionInputs() {
+export default function DescriptionInputs() {
     const {
         register,
         formState: { errors },
-    } = useFormContext<DescriptionData>();
+    } = useFormContext<IDescriptionData>();
 
     return (
         <>
             {/* 제목 작성란 */}
             <label htmlFor='title'>
                 {errors.title?.message && errors?.title?.type === 'required' && (
-                    <span className={'m-1 text-sm text-secondary'}>※ {errors.title.message}</span>
+                    <span role='alert' className={'m-1 text-sm text-secondary'}>
+                        ※ {errors.title.message}
+                    </span>
                 )}
                 {errors.title?.message && errors?.title?.type === 'maxLength' && (
-                    <span className={'m-1 text-sm text-secondary'}>※ {errors.title.message}</span>
+                    <span role='alert' className={'m-1 text-sm text-secondary'}>
+                        ※ {errors.title.message}
+                    </span>
                 )}
                 <input
                     id='title'
@@ -38,10 +42,14 @@ export default memo(function DescriptionInputs() {
             {/* 본문 작성란 */}
             <label htmlFor='bodyContent'>
                 {errors.bodyContent?.message && errors?.bodyContent?.type === 'required' && (
-                    <span className={'m-1 text-sm text-secondary'}>※ {errors.bodyContent.message}</span>
+                    <span role='alert' className={'m-1 text-sm text-secondary'}>
+                        ※ {errors.bodyContent.message}
+                    </span>
                 )}
                 {errors.bodyContent?.message && errors?.bodyContent?.type === 'maxLength' && (
-                    <span className={'m-1 text-sm text-secondary'}>※ {errors.bodyContent.message}</span>
+                    <span role='alert' className={'m-1 text-sm text-secondary'}>
+                        ※ {errors.bodyContent.message}
+                    </span>
                 )}
                 <textarea
                     id='bodyContent'
@@ -57,4 +65,4 @@ export default memo(function DescriptionInputs() {
             </label>
         </>
     );
-});
+}

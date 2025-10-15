@@ -1,8 +1,7 @@
-export interface ServerErrorResponse {
-    success: boolean;
-    response: object;
+// 서버 공통 에러 응답 객체
+export interface IServerErrorResponse {
     error: {
-        status: string;
         message: string;
+        status: string;
     };
 }

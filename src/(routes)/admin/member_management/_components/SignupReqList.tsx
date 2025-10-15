@@ -1,41 +1,35 @@
+// COMPONENT: 회원가입 요청 목록
 import { useMemo } from 'react';
 import { MaterialReactTable, useMaterialReactTable } from 'material-react-table';
 import { Box, IconButton, Tooltip } from '@mui/material';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { FaHandshakeSimple, FaHandshakeSimpleSlash } from 'react-icons/fa6';
-import axios from 'axios';
-import {
-    AUTHORITY_ENG_TO_KOR,
-    AUTHORITY_KOR_TO_ENG,
-    TABLE_COL_NAME,
-    WINDOW_ALERT_MESSAGE,
-} from '../../../../_constants/constants';
-import { ISignupReq } from '../../type';
+import { TABLE_COL_NAME, WINDOW_ALERT_MESSAGE } from '../../../../_constants/constants';
+import useGetSignupRequests from '../../_lib/getSignupRequests';
+import useApproveSignupRequest from '../../_lib/postSignupRequest';
+import useRejectSignupRequest from '../../_lib/deleteSignupRequest';
 
-// 회원가입 요청 목록
 export default function SignupReqList() {
     const columns = useMemo(() => TABLE_COL_NAME.signup, []);
 
-    // 회원가입요청 조회
+    // GET: 회원가입요청 조회
     const {
         data: fetchedSignupReqs = [],
         isError: isLoadingSignupReqsError,
         isFetching: isFetchingSignupReqs,
         isLoading: isLoadingSignupReqs,
-    } = useGetSignupReqs();
+    } = useGetSignupRequests();
+    // POST: 회원가입요청 승인
+    const { mutateAsync: approveReq, isPending: isApprovingReq } = useApproveSignupRequest();
+    // POST: 회원가입요청 거절
+    const { mutateAsync: rejectReq, isPending: isDeletingReq } = useRejectSignupRequest();
 
-    // 회원가입요청 승인
-    const { mutateAsync: approveReq, isPending: isApprovingReq } = useApproveReq();
-    // 회원가입요청 거절
-    const { mutateAsync: rejectReq, isPending: isDeletingReq } = useRejectReq();
-
-    // 회원가입 요청 승인 핸들러
+    // HANDLER: 회원가입 요청 승인 핸들러
     const handleReqApprove = async ({ original }) => {
         if (window.confirm(WINDOW_ALERT_MESSAGE.signupApproval(original))) {
             approveReq({ signupReq: original });
         }
     };
-    // 회원가입 요청 거절 핸들러
+    // HANDLER: 회원가입 요청 거절 핸들러
     const handleReqReject = ({ original }) => {
         if (window.confirm(WINDOW_ALERT_MESSAGE.signupReject(original))) {
             rejectReq({ signupReq: original });
@@ -86,64 +80,4 @@ export default function SignupReqList() {
     });
 
     return <MaterialReactTable table={table} />;
-}
-
-// REST: 회원가입 요청 목록 조회
-function useGetSignupReqs() {
-    return useQuery<ISignupReq[]>({
-        queryKey: ['signups'],
-        queryFn: async () => {
-            const signupReqsURL = `/api/manager/signup-request`;
-            return await axios.get(signupReqsURL).then(res => {
-                const reqs: ISignupReq[] = res.data.response.dtoList;
-
-                return reqs.map(req => ({
-                    ...req,
-                    memberAuthority: AUTHORITY_ENG_TO_KOR[req.memberAuthority] ?? '-',
-                }));
-            });
-        },
-        refetchOnWindowFocus: false,
-    });
-}
-
-interface ISignupProps {
-    signupReq: ISignupReq;
-}
-// REST: 회원가입 요청 승인
-function useApproveReq() {
-    const queryClient = useQueryClient();
-
-    return useMutation({
-        mutationFn: async ({ signupReq }: ISignupProps) => {
-            const approveReqURL = `/api/manager/approve-signup`;
-            return await axios.post(approveReqURL, {
-                loginId: signupReq.loginId,
-                memberAuthority: AUTHORITY_KOR_TO_ENG[signupReq.memberAuthority],
-            });
-        },
-        // 클라이언트 업데이트
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['signups'] });
-        },
-    });
-}
-
-// REST: 회원가입 요청 거절
-function useRejectReq() {
-    const queryClient = useQueryClient();
-
-    return useMutation({
-        mutationFn: async ({ signupReq }: ISignupProps) => {
-            const rejectReqURL = `/api/manager/reject-signup`;
-            return await axios.post(rejectReqURL, {
-                loginId: signupReq.loginId,
-                memberAuthority: AUTHORITY_KOR_TO_ENG[signupReq.memberAuthority],
-            });
-        },
-        // 클라이언트 업데이트
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['signups'] });
-        },
-    });
 }

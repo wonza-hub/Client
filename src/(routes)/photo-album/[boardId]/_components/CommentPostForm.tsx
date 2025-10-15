@@ -1,27 +1,22 @@
-import { useParams } from 'react-router-dom';
-import axios from 'axios';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+// COMPONENT: 댓글 작성하는 입력칸(폼)
 import { FiSend } from 'react-icons/fi';
 import LoadingSpinner from '../../../../_components/loadingSpinner/LoadingSpinner';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { INewCommentValues } from '../../types';
+import useCreatePhotoAlbumComment from '../../_lib/postPhotoAlbumComment';
 
-interface IProps {
+interface ICommentPostFormProps {
     isMetadataVisible: boolean;
 }
-
-export default function CommentPostForm({ isMetadataVisible }: IProps) {
+export default function CommentPostForm({ isMetadataVisible }: ICommentPostFormProps) {
     const methods = useForm({
         mode: 'onBlur',
     });
-    const { mutate: createComment, isPending: isCommentPending, isSuccess } = useCreateComment();
+    const { mutate: createComment, isPending: isCommentPending } = useCreatePhotoAlbumComment(methods.reset);
 
-    // 댓글 작성
-    const handleCommentSubmit: SubmitHandler<INewCommentValues> = ({ comment }) => {
+    // HANDLER: 댓글 작성
+    const handleCommentSubmit: SubmitHandler<INewCommentValues> = async ({ comment }) => {
         createComment(comment);
-        if (isSuccess) {
-            methods.reset();
-        }
     };
 
     return (
@@ -32,6 +27,7 @@ export default function CommentPostForm({ isMetadataVisible }: IProps) {
                         className='CommentForm flex w-full flex-auto flex-row items-center p-6 pl-10 pr-6'
                         onSubmit={methods.handleSubmit(handleCommentSubmit)}
                     >
+                        {/* 댓글 작성란 */}
                         {isCommentPending ? (
                             <div className='flex h-full w-full justify-center pb-1 pt-2'>
                                 <LoadingSpinner size={32} />
@@ -50,6 +46,7 @@ export default function CommentPostForm({ isMetadataVisible }: IProps) {
                                 />
                             </label>
                         )}
+                        {/* 등록 버튼 */}
                         <button className='CommentPostBtn h-10 w-10 text-secondary' disabled={isCommentPending}>
                             <FiSend size={32} />
                         </button>
@@ -58,27 +55,4 @@ export default function CommentPostForm({ isMetadataVisible }: IProps) {
             ) : null}
         </>
     );
-}
-
-// REST: 댓글 작성
-function useCreateComment() {
-    const queryClient = useQueryClient();
-    const { boardId } = useParams();
-
-    return useMutation({
-        mutationFn: async (newComment: string) => {
-            const commentPostURL = `/api/comment/${boardId}`;
-
-            return await axios.post(commentPostURL, {
-                content: newComment,
-            });
-        },
-        // 클라이언트 업데이트
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['album', boardId] });
-        },
-        onError: () => {
-            window.alert('댓글 작성에 실패했습니다.');
-        },
-    });
 }

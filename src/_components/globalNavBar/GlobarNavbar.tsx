@@ -87,12 +87,12 @@ export default function GlobalNavbar() {
                 'z-10 flex h-[4.68rem] w-full items-center justify-between border-b border-b-gray-200 bg-white p-4 shadow-sm'
             }
         >
-            <Link to={'/'}>
+            <Link to={'/'} role='banner'>
                 <div className='h-[4rem] w-[12rem] md:w-[14rem] lg:w-[16rem] xl:w-[18rem]'>
                     <img
                         className='h-full w-full object-contain'
                         src={'/_assets/images/nestnet-logo-primary.png'}
-                        alt={'NestNetLogo'}
+                        alt=''
                     />
                 </div>
             </Link>

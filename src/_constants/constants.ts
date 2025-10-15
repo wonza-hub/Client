@@ -1,11 +1,19 @@
+import { MRT_ColumnDef } from 'material-react-table';
+import { IMember } from '../(routes)/admin/type';
+
 // 기존 등록 사진 여부
 export const ORIGINAL_FILE_FLAG: string = 'originalFileName';
 
 // 사진게시판 사진 파일 제한 용량 (메가바이트)
-export const FILE_SIZE_MAX_LIMIT = 10;
+export const UPLOAD_FILE_SIZE_MAX_LIMIT = 10;
+
+export const FIXED_RESIZED_IMAGE_WIDTH = 600; // 리사이징할 고정 가로 크기(px)
 
 // 요청 타임아웃
 export const TIME_OUT = 5000;
+
+// 인생네컷 사진 개수
+export const LIFE4CUT_SIZE = 20;
 
 // 페이지 라우팅
 export const PAGE_ROUTE = Object.freeze({
@@ -106,7 +114,7 @@ export const TABLE_COL_NAME = Object.freeze({
                 // helperText: validationErrors?.state,
             },
         },
-    ],
+    ] as MRT_ColumnDef<IMember>[],
     signup: [
         {
             accessorKey: 'name',

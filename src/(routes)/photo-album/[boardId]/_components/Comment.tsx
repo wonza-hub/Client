@@ -1,22 +1,16 @@
+// COMPONENT: 댓글
 import { useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { useQueryClient, useMutation } from '@tanstack/react-query';
-import axios from 'axios';
 import { StringCombinator } from '../../../../_utils/StringCombinator';
 import getAvatarStyle from '../../../../_utils/getAvatarStyle';
 import LoadingSpinner from '../../../../_components/loadingSpinner/LoadingSpinner';
 import { ICommentDto } from '../../types';
-import { AxiosResponse } from 'axios';
+import useUpdateComment from '../../_lib/putPhotoAlbumComment';
+import useDeleteComment from '../../_lib/deletePhotoAlbumComment';
 
-interface IProps {
+interface ICommentProps {
     comment: ICommentDto;
 }
-interface IModifiedCommentProps {
-    commentId: number;
-    updateValue: string;
-}
-
-export default function Comment({ comment }: IProps) {
+export default function Comment({ comment }: ICommentProps) {
     const {
         commentId,
         username,
@@ -139,48 +133,4 @@ export default function Comment({ comment }: IProps) {
             </li>
         </>
     );
-}
-
-// REST: 댓글 수정
-function useUpdateComment() {
-    const queryClient = useQueryClient();
-    const { boardId } = useParams();
-
-    return useMutation<AxiosResponse, Error, IModifiedCommentProps>({
-        mutationFn: async ({ commentId, updateValue }) => {
-            const commentUpdateURL = `/api/comment/modify/${commentId}`;
-            return await axios.post(commentUpdateURL, {
-                content: updateValue,
-            });
-        },
-
-        // 클라이언트 업데이트
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['album', boardId] });
-        },
-        onError: () => {
-            window.alert('댓글 수정에 실패하였습니다.');
-        },
-    });
-}
-
-// REST: 댓글 삭제
-function useDeleteComment() {
-    const queryClient = useQueryClient();
-    const { boardId } = useParams();
-
-    return useMutation<AxiosResponse, Error, number>({
-        mutationFn: async commentId => {
-            const commentDeletionURL = `/api/comment/delete/${commentId}`;
-            return await axios.delete(commentDeletionURL);
-        },
-
-        // 클라이언트 업데이트
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['album', boardId] });
-        },
-        onError: () => {
-            window.alert('댓글 삭제에 실패하였습니다.');
-        },
-    });
 }

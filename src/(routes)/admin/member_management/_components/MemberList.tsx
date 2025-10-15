@@ -1,94 +1,31 @@
+// COMPONENT: 회원 목록
 import { useMemo } from 'react';
-import { MaterialReactTable, useMaterialReactTable, type MRT_Row, type MRT_ColumnDef } from 'material-react-table';
+import { MaterialReactTable, useMaterialReactTable, type MRT_Row } from 'material-react-table';
 import { Box, IconButton, Tooltip } from '@mui/material';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { RiPencilFill } from 'react-icons/ri';
 import { MdDelete } from 'react-icons/md';
-import axios from 'axios';
-import {
-    AUTHORITY_ENG_TO_KOR,
-    AUTHORITY_KOR_TO_ENG,
-    AVAIL_AUTHORITY,
-    WINDOW_ALERT_MESSAGE,
-} from '../../../../_constants/constants';
+import { TABLE_COL_NAME, WINDOW_ALERT_MESSAGE } from '../../../../_constants/constants';
 import { IEditProps, IMember } from '../../type';
+import useGetMembers from '../../_lib/getMembers';
+import useUpdateMember from '../../_lib/putMember';
+import useDeleteMember from '../../_lib/deleteMember';
 
-// 동아리원 목록
 export default function MemberList() {
-    const columns = useMemo<MRT_ColumnDef<IMember>[]>(
-        () => [
-            {
-                accessorKey: 'name',
-                header: '성명',
-                enableEditing: false,
-                size: 50,
-                maxSize: 50,
-            },
-            {
-                accessorKey: 'loginId',
-                header: '아이디',
-                enableEditing: false,
-                size: 50,
-                maxSize: 50,
-            },
-            {
-                accessorKey: 'emailAddress',
-                header: '이메일',
-                enableEditing: false,
-                size: 50,
-                maxSize: 50,
-            },
-            {
-                accessorKey: 'studentId',
-                header: '학번',
-                enableEditing: false,
-                size: 50,
-                maxSize: 50,
-            },
-            {
-                accessorKey: 'grade',
-                header: '학년',
-                enableEditing: false,
-                size: 50,
-                maxSize: 50,
-            },
-            {
-                accessorKey: 'graduateYear',
-                header: '졸업년도',
-                enableEditing: false,
-                size: 50,
-                maxSize: 50,
-            },
-            {
-                accessorKey: 'memberAuthority',
-                header: '권한',
-                editVariant: 'select',
-                editSelectOptions: AVAIL_AUTHORITY,
-                size: 50,
-                maxSize: 50,
-                muiEditTextFieldProps: {
-                    select: true,
-                    // error: !!validationErrors?.state,
-                    // helperText: validationErrors?.state,
-                },
-            },
-        ],
-        [],
-    );
+    const columns = useMemo(() => TABLE_COL_NAME.member, []);
 
-    // call READ hook
+    // GET: 회원 계정 목록 조회
     const {
         data: fetchedUsers = [],
         isError: isLoadingUsersError,
         isFetching: isFetchingUsers,
         isLoading: isLoadingUsers,
-    } = useGetUsers();
-    // call UPDATE hook
-    const { mutateAsync: updateUser, isPending: isUpdatingUser } = useUpdateUser();
-    // call DELETE hook
-    const { mutateAsync: deleteUser, isPending: isDeletingUser } = useDeleteUser();
+    } = useGetMembers();
+    // POST: 회원 정보 수정
+    const { mutateAsync: updateUser, isPending: isUpdatingUser } = useUpdateMember();
+    // DELETE: 회원 계정 삭제
+    const { mutateAsync: deleteUser, isPending: isDeletingUser } = useDeleteMember();
 
-    // 권한 수정 핸들러
+    // HANDLER: 권한 수정 핸들러
     const handleMemberEditSave = async ({ row, values }: IEditProps) => {
         if (confirm(WINDOW_ALERT_MESSAGE.authorityChange(row, values))) {
             const updatedMemberId = row.original.id;
@@ -110,8 +47,7 @@ export default function MemberList() {
             window.alert('회원 탈퇴에 실패했습니다.');
         }
     };
-
-    // 회원 탈퇴 핸들러
+    // HANDLER: 회원 탈퇴
     const handleMemberDelete = (row: MRT_Row<IMember>) => {
         if (window.confirm(WINDOW_ALERT_MESSAGE.memberDeletion(row))) {
             const inputValue = window.prompt(
@@ -122,6 +58,7 @@ export default function MemberList() {
         }
     };
 
+    // 회원목록 테이블 정의
     const table = useMaterialReactTable({
         columns,
         data: fetchedUsers,
@@ -167,63 +104,4 @@ export default function MemberList() {
     });
 
     return <MaterialReactTable table={table} />;
-}
-
-// REST: 동아리원 목록 조회
-function useGetUsers() {
-    return useQuery<IMember[]>({
-        queryKey: ['members'],
-        queryFn: async () => {
-            const allMembersURL = `/api/manager/member-info`;
-            return await axios.get(allMembersURL).then(res => {
-                const members: IMember[] = res.data.response.dtoList;
-
-                return members.map(member => ({
-                    ...member,
-                    memberAuthority: AUTHORITY_ENG_TO_KOR[member.memberAuthority] ?? '-',
-                }));
-            });
-        },
-        refetchOnWindowFocus: false,
-    });
-}
-
-interface IUpdatedMemberProps {
-    updatedMemberId: number;
-    updatedValues: IMember;
-}
-
-// REST: 동아리원 권한 수정
-function useUpdateUser() {
-    const queryClient = useQueryClient();
-
-    return useMutation({
-        mutationFn: async ({ updatedMemberId, updatedValues }: IUpdatedMemberProps) => {
-            const authorityChangeURL = `/api/manager/change-authority`;
-            return await axios.post(authorityChangeURL, {
-                id: updatedMemberId,
-                memberAuthority: AUTHORITY_KOR_TO_ENG[updatedValues.memberAuthority],
-            });
-        },
-        // 클라이언트 업데이트
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['members'] });
-        },
-    });
-}
-
-// REST: 동아리원 탈퇴
-function useDeleteUser() {
-    const queryClient = useQueryClient();
-
-    return useMutation({
-        mutationFn: async ({ id }: IMember) => {
-            const deleteMemberURL = `/api/manager/member-withdraw?member-id=${id}`;
-            return await axios.delete(deleteMemberURL);
-        },
-        // 클라이언트 업데이트
-        onSuccess: () => {
-            queryClient.invalidateQueries({ queryKey: ['members'] });
-        },
-    });
 }

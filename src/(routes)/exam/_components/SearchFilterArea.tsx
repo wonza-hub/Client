@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { isEqual } from 'lodash';
+import isEqual from 'lodash/isEqual';
 import useExamSearchFilterStore from '../../../_stores/useExamSearchFilterStore';
 import SearchFilterModal from './SearchFilterModal';
 

@@ -1,9 +1,10 @@
+// COMPONENT: 선택된 사진 (사용자가 보려고 클릭한 사진)
 import { useRef, memo } from 'react';
 import toggleFullScreen from '../../../../_hooks/useFullScreen';
 import { StringCombinator } from '../../../../_utils/StringCombinator';
-import { IExistingFileDto } from '../../types';
+import { IPhotoAlbumFileDto } from '../../types';
 
-export default memo(function SelectedPhoto({ selectedPhoto }: { selectedPhoto: IExistingFileDto }) {
+export default memo(function SelectedPhoto({ selectedPhoto }: { selectedPhoto: IPhotoAlbumFileDto }) {
     const selectedPhotoRef = useRef<HTMLImageElement>();
     // LOADING: 스켈레톤
     if (!selectedPhoto) {
@@ -12,6 +13,7 @@ export default memo(function SelectedPhoto({ selectedPhoto }: { selectedPhoto: I
 
     if (selectedPhoto) {
         const selectedPhotoURL = StringCombinator.getImageURL(selectedPhoto?.saveFilePath, selectedPhoto?.saveFileName);
+
         return (
             <img
                 className='m-auto'

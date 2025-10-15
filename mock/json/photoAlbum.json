@@ -1,0 +1,253 @@
+{
+  "photo-album": [
+    {
+      "id": 1,
+      "title": "24년 체육대회",
+      "viewCount": 100,
+      "likeCount": 100,
+      "saveFilePath": "../../mock/img",
+      "saveFileName": "test1.avif"
+    },
+    {
+      "id": 2,
+      "title": "24년 체육대회",
+      "viewCount": 100,
+      "likeCount": 100,
+      "saveFilePath": "../../mock/img",
+      "saveFileName": "test2.avif"
+    },
+    {
+      "id": 3,
+      "title": "24년 체육대회",
+      "viewCount": 100,
+      "likeCount": 100,
+      "saveFilePath": "../../mock/img",
+      "saveFileName": "test3.avif"
+    },
+    {
+      "id": 4,
+      "title": "24년 체육대회",
+      "viewCount": 100,
+      "likeCount": 100,
+      "saveFilePath": "../../mock/img",
+      "saveFileName": "test4.avif"
+    },
+    {
+      "id": 5,
+      "title": "24년 체육대회",
+      "viewCount": 100,
+      "likeCount": 100,
+      "saveFilePath": "../../mock/img",
+      "saveFileName": "test5.avif"
+    },
+    {
+      "id": 6,
+      "title": "24년 체육대회",
+      "viewCount": 100,
+      "likeCount": 100,
+      "saveFilePath": "../../mock/img",
+      "saveFileName": "test6.avif"
+    },
+    {
+      "id": 7,
+      "title": "24년 체육대회",
+      "viewCount": 100,
+      "likeCount": 100,
+      "saveFilePath": "../../mock/img",
+      "saveFileName": "test7.avif"
+    },
+    {
+      "id": 8,
+      "title": "24년 체육대회",
+      "viewCount": 100,
+      "likeCount": 100,
+      "saveFilePath": "../../mock/img",
+      "saveFileName": "test8.avif"
+    },
+    {
+      "id": 9,
+      "title": "24년 체육대회",
+      "viewCount": 100,
+      "likeCount": 100,
+      "saveFilePath": "../../mock/img",
+      "saveFileName": "test9.avif"
+    },
+    {
+      "id": 10,
+      "title": "24년 체육대회",
+      "viewCount": 100,
+      "likeCount": 100,
+      "saveFilePath": "../../mock/img",
+      "saveFileName": "test10.avif"
+    },
+    {
+      "id": 11,
+      "title": "24년 체육대회",
+      "viewCount": 100,
+      "likeCount": 100,
+      "saveFilePath": "../../mock/img",
+      "saveFileName": "test11.avif"
+    },
+    {
+      "id": 12,
+      "title": "24년 체육대회",
+      "viewCount": 100,
+      "likeCount": 100,
+      "saveFilePath": "../../mock/img",
+      "saveFileName": "test12.avif"
+    },
+    {
+      "id": 13,
+      "title": "24년 체육대회",
+      "viewCount": 100,
+      "likeCount": 100,
+      "saveFilePath": "../../mock/img",
+      "saveFileName": "test13.avif"
+    },
+    {
+      "id": 14,
+      "title": "24년 체육대회",
+      "viewCount": 100,
+      "likeCount": 100,
+      "saveFilePath": "../../mock/img",
+      "saveFileName": "test14.avif"
+    },
+    {
+      "id": 15,
+      "title": "24년 체육대회",
+      "viewCount": 100,
+      "likeCount": 100,
+      "saveFilePath": "../../mock/img",
+      "saveFileName": "test15.avif"
+    },
+    {
+      "id": 16,
+      "title": "24년 체육대회",
+      "viewCount": 100,
+      "likeCount": 100,
+      "saveFilePath": "../../mock/img",
+      "saveFileName": "test16.avif"
+    },
+    {
+      "id": 17,
+      "title": "24년 체육대회",
+      "viewCount": 100,
+      "likeCount": 100,
+      "saveFilePath": "../../mock/img",
+      "saveFileName": "test17.avif"
+    },
+    {
+      "id": 18,
+      "title": "24년 체육대회",
+      "viewCount": 100,
+      "likeCount": 100,
+      "saveFilePath": "../../mock/img",
+      "saveFileName": "test18.avif"
+    },
+    {
+      "id": 19,
+      "title": "24년 체육대회",
+      "viewCount": 100,
+      "likeCount": 100,
+      "saveFilePath": "../../mock/img",
+      "saveFileName": "test19.avif"
+    },
+    {
+      "id": 20,
+      "title": "24년 체육대회",
+      "viewCount": 100,
+      "likeCount": 100,
+      "saveFilePath": "../../mock/img",
+      "saveFileName": "test10.avif"
+    },
+    {
+      "id": 21,
+      "title": "24년 체육대회",
+      "viewCount": 100,
+      "likeCount": 100,
+      "saveFilePath": "../../mock/img",
+      "saveFileName": "test1.avif"
+    }
+  ],
+  "photo-album-item": {
+    "photoPostDto": {
+      "id": 1,
+      "title": "23 체육대회",
+      "bodyContent": "2023년도 소프트웨어학과 체육대회",
+      "viewCount": 123,
+      "likeCount": 22,
+      "username": "wonil",
+      "createdTime": ["2024", "01", "01", "04", "03", "47"],
+      "modifiedTime": ["2024", "01", "01", "04", "04", "47"],
+      "memberWritten": true
+    },
+    "fileDtoList": [
+      {
+        "id": 1,
+        "originalFileName": "사진게시판샘플1.avif",
+        "saveFileName": "test1.avif",
+        "saveFilePath": "../../mock/img"
+      },
+      {
+        "id": 2,
+        "originalFileName": "사진게시판샘플2.avif",
+        "saveFileName": "test2.avif",
+        "saveFilePath": "../../mock/img"
+      },
+      {
+        "id": 3,
+        "originalFileName": "사진게시판샘플2.avif",
+        "saveFileName": "test3-resize.jpg",
+        "saveFilePath": "../../mock/img"
+      },
+      {
+        "id": 4,
+        "originalFileName": "사진게시판샘플2.avif",
+        "saveFileName": "test4.avif",
+        "saveFilePath": "../../mock/img"
+      },
+      {
+        "id": 5,
+        "originalFileName": "사진게시판샘플2.avif",
+        "saveFileName": "test5.avif",
+        "saveFilePath": "../../mock/img"
+      },
+      {
+        "id": 6,
+        "originalFileName": "사진게시판샘플2.avif",
+        "saveFileName": "test6.avif",
+        "saveFilePath": "../../mock/img"
+      }
+    ],
+    "commentDtoList": [
+      {
+        "commentId": 6,
+        "username": "성호",
+        "content": "가나다라마바사 아자차카타파하",
+        "createdTime": ["2024", "01", "01", "04", "04", "47"],
+        "modifiedTime": null,
+        "memberWritten": false,
+        "memberAuthority": "GENERAL_MEMBER"
+      },
+      {
+        "commentId": 7,
+        "username": "원일",
+        "content": "가나다라마바사 아자차카타파하 가나다라마바사 아자차카타파하 가나다라마바사 아자차카타파하",
+        "createdTime": ["2024", "01", "01", "04", "04", "47"],
+        "modifiedTime": null,
+        "memberWritten": true,
+        "memberAuthority": "MANAGER"
+      },
+      {
+        "commentId": 8,
+        "username": "한울",
+        "content": "가나다라마바사 가나다라마바사 아자차카타파하",
+        "createdTime": ["2024", "01", "01", "04", "04", "47"],
+        "modifiedTime": ["2024", "01", "05", "04", "04", "47"],
+        "memberWritten": false,
+        "memberAuthority": "PRESIDENT"
+      }
+    ],
+    "memberLiked": true
+  }
+}

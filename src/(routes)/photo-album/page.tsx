@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { Link } from 'react-router-dom';
 import Masonry from 'react-masonry-css';
 import { Flex } from '@chakra-ui/react';
 import { useInfiniteQuery } from '@tanstack/react-query';
@@ -9,9 +8,8 @@ import Skeleton from '@mui/material/Skeleton';
 import Box from '@mui/material/Box';
 import PhotoAlbumThumbnail from './_components/PhotoAlbumThumbnail';
 import LoadingSpinner from '../../_components/loadingSpinner/LoadingSpinner';
-import { FaPlus } from 'react-icons/fa';
-import { PAGE_ROUTE } from '../../_constants/constants';
 import { IPhotoAlbumMetaData } from './types';
+import getNextPhotoAlbums from './_lib/getNextPhotoAlbums';
 
 // Masonary 레이아웃 열 갯수 (반응형)
 const breakpointColumnsObj = {
@@ -24,8 +22,6 @@ export default function Page() {
     // 무한스크롤 api 호출 지점 옵저버
     const { ref: observeBtmRef, inView } = useInView();
 
-    const navigate = useNavigate();
-
     // 리액트 쿼리 무한스크롤 api
     const {
         data: photoAlbumPages,
@@ -34,8 +30,8 @@ export default function Page() {
         hasNextPage,
         isFetchingNextPage,
     } = useInfiniteQuery({
-        queryKey: ['albums'],
-        queryFn: getMorePhotoAlbums,
+        queryKey: ['album'],
+        queryFn: getNextPhotoAlbums,
         // page 파라미터 초기값
         initialPageParam: 1,
         // lastPage: 마지막에 불러온 한 페이지 내 배열, allPages: 현재까지 불러온 총페이지 배열
@@ -55,13 +51,6 @@ export default function Page() {
 
     return (
         <>
-            {/* 사진게시판 게시물 등록 버튼 */}
-            <div
-                className='fixed bottom-10 right-12 z-10 flex h-10 w-10 cursor-pointer flex-col items-center justify-center rounded-full bg-primary text-white'
-                onClick={() => navigate(`/${PAGE_ROUTE.PHOTOALBUMS}/post`)}
-            >
-                <FaPlus />
-            </div>
             {/* 게시물 목록 */}
             <div className='relative mx-auto flex h-[calc(100dvh-4.68rem)] flex-col overflow-y-auto border-x border-gray-200 scrollbar-hide xl:w-[70rem]'>
                 <Flex sx={{ width: '100%' }} as={Masonry} breakpointCols={breakpointColumnsObj}>
@@ -101,12 +90,3 @@ export default function Page() {
         </>
     );
 }
-
-// REST: 스크롤시 다음 페이지의 앨범데이터를 가져옴
-const getMorePhotoAlbums = async ({ pageParam }) => {
-    const photoAlbumPagesURL = `/api/photo-post?page=${pageParam}`;
-
-    return await axios.get(photoAlbumPagesURL).then(res => {
-        return res.data.response.dtoList;
-    });
-};
