@@ -116,7 +116,6 @@ jobs:
 
           # 2️⃣ Docker Compose 배포
           echo "--- Deploying containers ---"
-          docker compose pull
           docker compose up -d --build
 
           # 3️⃣ 불필요한 이미지 정리
