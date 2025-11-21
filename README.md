@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://github.com/user-attachments/assets/ca2219a0-73f3-4eee-bd4c-47b2d178e1f9" width="180px"/>
+<img src="https://github.com/user-attachments/assets/ca2219a0-73f3-4eee-bd4c-47b2d178e1f9" width="100px"/>
 </div>
 
 <div align="center">
@@ -12,7 +12,7 @@ NestNet
 <a href="https://nnet.cbnu.ac.kr/">배포 링크</a>
 <br />
 <small>
-2023.07~2024.02
+2023.07~2024.02 (유지보수중)
 </small>
 </div>
 
@@ -20,41 +20,38 @@ NestNet
 
 기존 홈페이지는 2005년에 제작되어 유지보수 문서가 부재해 유지보수가 불가했고, UI/UX가 다소 좋지 않았습니다. 이에 필수적인 정보들만 제공하는 간결하고 정돈된 홈페이지를 제작하고자 했습니다.
 
-###### 사용 기술
-
-<div>
-<img src="https://img.shields.io/badge/Html-E34F26?style=for-the-badge&logo=Html5&logoColor=white">
-<img src="https://img.shields.io/badge/Css-1572B6?style=for-the-badge&logo=Css3&logoColor=white">
-<img src="https://img.shields.io/badge/Tailwind%20Css-06B6D4?style=for-the-badge&logo=TailwindCSS&logoColor=white">
-<img src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white">
-<img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white">
-<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white">
-<img src="https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white">
-<img src="https://img.shields.io/badge/-React%20Query-FF4154?style=for-the-badge&logo=react%20query&logoColor=white">
-<img src="https://img.shields.io/badge/React%20Hook%20Form-%23EC5990.svg?style=for-the-badge&logo=reacthookform&logoColor=white">
-<img src="https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white">
-<img src="https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white">
-</div>
-
 ###### 시작 가이드
 
 ```bash
     yarn install
     yarn vite
 ```
-###### 아키텍쳐
+###### 서비스 아키텍처
 <div align="center">
-    <img src="https://github.com/user-attachments/assets/dff81261-4259-4f2d-9766-9ca05680315e" width="720px"/>
+    <img src="https://github.com/user-attachments/assets/dff81261-4259-4f2d-9766-9ca05680315e" width="640px"/>
 </div>
 
----
+## 개발환경
 
-### ✨ 주요 기능
+### Language
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+
+### Build
+![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
+
+### Framework & Libraries
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![React Query](https://img.shields.io/badge/-Tanstack%20Query-FF4154?style=for-the-badge&logo=react%20query&logoColor=white)
+![React Hook Form](https://img.shields.io/badge/React%20Hook%20Form-%23EC5990.svg?style=for-the-badge&logo=reacthookform&logoColor=white)
+
+## 담당 기능
 
 #### 메인 🏠
 
 > <p align="center">
-> <img src="https://github.com/user-attachments/assets/e360e432-7c2a-4ed5-aabc-176f6021c555">
+> <img src="https://github.com/user-attachments/assets/e360e432-7c2a-4ed5-aabc-176f6021c555" width="300px">
 > </p>
 
 - 최신 글, 주간/월간 출석 순위 확인
@@ -65,7 +62,7 @@ NestNet
   - 좌우로 무한으로 움직이는 배너 제공
 
 > <p align="center">
-> <img src="https://github.com/user-attachments/assets/cd24b03b-4dab-4ac2-88c2-d5923c179720">
+> <img src="https://github.com/user-attachments/assets/cd24b03b-4dab-4ac2-88c2-d5923c179720" width="300px">
 > </p>
 
 - 다양한 기기의 화면에서 보기 편리한 반응형 제공
@@ -75,7 +72,7 @@ NestNet
 ##### 게시물 목록
 
 > <p align="center">
-> <img src="https://github.com/user-attachments/assets/9356f246-9eba-42ef-9f94-e202d44105d6">
+> <img src="https://github.com/user-attachments/assets/9356f246-9eba-42ef-9f94-e202d44105d6" width="300px">
 > </p>
 
 - 동아리 활동 중 찍은 사진들을 구경
@@ -85,11 +82,11 @@ NestNet
 ##### 게시물 상세
 
 > <p align="center">
-> <img src="https://github.com/user-attachments/assets/910cfb63-67b1-4214-ab28-5ebef2e45f99">
+> <img src="https://github.com/user-attachments/assets/910cfb63-67b1-4214-ab28-5ebef2e45f99" width="300px">
 > </p>
 
 > <p align="center">
-> <img src="https://github.com/user-attachments/assets/8c0c4d87-7928-4583-b62e-97a87cd701f6">
+> <img src="https://github.com/user-attachments/assets/8c0c4d87-7928-4583-b62e-97a87cd701f6" width="300px">
 > </p>
 
 - 게시물의 상세 사진들 구경
@@ -100,7 +97,7 @@ NestNet
 ##### 게시물 등록 (관리자 전용)
 
 > <p align="center">
-> <img src="https://github.com/user-attachments/assets/32e5041f-87d4-4155-b2d5-070a98c486cb">
+> <img src="https://github.com/user-attachments/assets/32e5041f-87d4-4155-b2d5-070a98c486cb" width="300px">
 > </p>
 
 - 게시물(사진, 제목, 본문) 등록 기능
@@ -112,7 +109,7 @@ NestNet
 ##### 회원 관리
 
 > <p align="center">
-> <img src="https://github.com/user-attachments/assets/dafa9c55-c7dd-48ea-9fe1-199980df6575">
+> <img src="https://github.com/user-attachments/assets/dafa9c55-c7dd-48ea-9fe1-199980df6575" width="300px">
 > </p>
 
 - 회원 권한 수정 및 탈퇴 기능
@@ -120,7 +117,7 @@ NestNet
 ##### 회원가입 요청 관리
 
 > <p align="center">
-> <img src="https://github.com/user-attachments/assets/2405a65d-30c7-4655-9537-dd0e56f58176">
+> <img src="https://github.com/user-attachments/assets/2405a65d-30c7-4655-9537-dd0e56f58176" width="300px">
 > </p>
 
 - 회원가입 요청 승인/거절 기능
