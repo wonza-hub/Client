@@ -4,16 +4,15 @@ import { MdUpload } from 'react-icons/md';
 import { FaTrash, FaCompress } from 'react-icons/fa';
 import { AiFillFileImage } from 'react-icons/ai';
 import { StringCombinator } from '../../../_utils/StringCombinator';
-import { FIXED_RESIZED_IMAGE_WIDTH, ORIGINAL_FILE_FLAG } from '../../../_constants/constants';
+import { ORIGINAL_FILE_FLAG } from '../../../_constants/constants';
 import { nanoid } from 'nanoid';
 import { IExistingFileDto, IUploadedFileDto } from '../types';
 import { useFormContext, useWatch } from 'react-hook-form';
-import resizeImageFile from '../../../_utils/resizeImageFile';
-import loadImage from '../../../_utils/loadImage';
 import { filterBigSizeFiles } from '../../../_utils/filterBigSizeFiles';
+import useImageResizer from '../../../_hooks/useImageResizer';
 
 // TYPE GUARD: 게시물 수정 시 기존 파일 여부 체크
-const isExistingFileDto = (fileItem: any): fileItem is IExistingFileDto => {
+const isExistingFileDto = (fileItem: IExistingFileDto | IUploadedFileDto): fileItem is IExistingFileDto => {
     return ORIGINAL_FILE_FLAG in fileItem;
 };
 // TYPE GUARD: Promise 이행 상태 타입 체크
@@ -37,32 +36,29 @@ export default memo(function FileInput({ existingFiles, existingFileIds, setExis
 
     const [compressing, setCompressing] = useState(false);
 
-    // 파일 인풋 ref
     const fileInputRef = useRef<HTMLInputElement>(null);
     // 스크롤 이벤트 위한 가짜 ref
     const lastFileRef = useRef<HTMLDivElement>(null);
+
+    const { resizeImage } = useImageResizer();
 
     // HANDLER: 파일 업로드
     const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         setCompressing(true);
         const uploadedFiles = event.currentTarget.files;
+        if (!uploadedFiles) return;
+
         const sizeFilteredUploadedFiles = filterBigSizeFiles(uploadedFiles);
 
-        // 파일 리사이징 (임시)
+        // 파일 리사이징 (Web Worker + OffscreenCanvas)
         try {
             const filePromises = sizeFilteredUploadedFiles.map(async uploadedFile => {
                 try {
-                    // 1) 이미지 로드해서 원본 비율 얻기
-                    const img = await loadImage(uploadedFile);
-                    const { naturalWidth: origW, naturalHeight: origH } = img;
-                    // 2) 비율 유지하며 세로 크기 계산
-                    const computedHeight = Math.round((origH / origW) * FIXED_RESIZED_IMAGE_WIDTH);
-                    // 3) 이미지 리사이즈
-                    const resizedFile = await resizeImageFile({
+                    // 워커에서 리사이징 수행
+                    const resizedFile = await resizeImage({
                         file: uploadedFile,
-                        targetWidth: FIXED_RESIZED_IMAGE_WIDTH,
-                        targetHeight: computedHeight,
                         compressFormat: 'WEBP',
+                        quality: 0.8,
                     });
 
                     return {
