@@ -9,10 +9,10 @@ NestNet
 <h5>
 충북대학교 소프트웨어학과 네스트넷 공식 홈페이지 (프론트엔드)
 </h5>
-<a href="https://nnet.cbnu.ac.kr/">배포 링크</a>
+<a href="https://nnet.cbnu.ac.kr/">배포 링크 (운영 중단)</a>
 <br />
 <small>
-2023.07~2024.02 (유지보수중)
+2023.07~2024.02
 </small>
 </div>
 
