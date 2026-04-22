@@ -94,10 +94,6 @@ NestNet
 
 #### Web Worker와 OffscreenCanvas API로 대용량 이미지 업로드 최적화
 
-<div align='center'>
-    <img width="520" alt="image 13" src="https://github.com/user-attachments/assets/55cc620f-340f-4ff1-9fac-a4c114e5db3b" />
-</div>
-
 ##### 문제 및 원인
 
 <div align='center'>
@@ -105,8 +101,15 @@ NestNet
 </div>
 
 - **대용량 이미지 다중 업로드 시 텍스트 입력 지연:** 대용량(주로 5MB 이상) 이미지의 다중 업로드 진행 중에 게시글 제목 및 설명 타이핑에 프리징(Freezing) 현상이 생겼습니다. 기존의 이미지 리사이징 및 포맷 변환을 수행하는 라이브러리가 메인 스레드에서 동작하여 UI 렌더링 작업을 차단했기 때문이었습니다.
+
 ##### 해결 과정
+
+<div align='center'>
+    <img width="520" alt="image 13" src="https://github.com/user-attachments/assets/55cc620f-340f-4ff1-9fac-a4c114e5db3b" />
+</div>
+
 - OffscreenCanvas 기반의 이미지 리사이징 등의 이미지 최적화를 수행하는 Web Worker를 생성하고 해당 Worker를 사용하는 커스텀 훅을 구현했습니다.
+
 ##### 결과
 - 대용량 이미지 업로드 시 UI 렌더링 블로킹 해결
 ##### 배운 점
