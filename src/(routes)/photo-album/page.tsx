@@ -38,7 +38,6 @@ export default function Page() {
         getNextPageParam: (lastPage, allPages) => (lastPage.length ? allPages.length + 1 : undefined),
         retry: false,
         refetchOnWindowFocus: false,
-        gcTime: 0,
         throwOnError: true,
     });
 
