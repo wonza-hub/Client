@@ -13,7 +13,7 @@ import loadImage from '../../../_utils/loadImage';
 import { filterBigSizeFiles } from '../../../_utils/filterBigSizeFiles';
 
 // TYPE GUARD: 게시물 수정 시 기존 파일 여부 체크
-const isExistingFileDto = (fileItem: any): fileItem is IExistingFileDto => {
+const isExistingFileDto = (fileItem: IExistingFileDto | IUploadedFileDto): fileItem is IExistingFileDto => {
     return ORIGINAL_FILE_FLAG in fileItem;
 };
 // TYPE GUARD: Promise 이행 상태 타입 체크
@@ -65,6 +65,10 @@ export default memo(function FileInput({ existingFiles, existingFileIds, setExis
                         compressFormat: 'WEBP',
                     });
 
+                    // return {
+                    //     id: nanoid(),
+                    //     file: uploadedFile,
+                    // };
                     return {
                         id: nanoid(),
                         file: resizedFile,

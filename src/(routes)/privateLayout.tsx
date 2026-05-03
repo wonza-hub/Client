@@ -19,7 +19,6 @@ export default function PrivateLayout() {
     return (
         <>
             {!(pathname.includes('/admin') && pathname.split('/')[1] === 'admin') && <GlobalNavbar />}
-
             <ErrorBoundary
                 key={pathname + new Date().getTime()}
                 onReset={reset}
@@ -34,7 +33,6 @@ export default function PrivateLayout() {
                 >
                     <Outlet />
                 </Suspense>
-                <Outlet />
             </ErrorBoundary>
         </>
     );
