@@ -55,40 +55,15 @@ NestNet
 
 ## 미리보기
 
-<p align="center">
-    <img src="https://github.com/user-attachments/assets/e360e432-7c2a-4ed5-aabc-176f6021c555" width="300px">
-</p>
+## 📸 화면 구성
 
-<p align="center">
-    <img src="https://github.com/user-attachments/assets/cd24b03b-4dab-4ac2-88c2-d5923c179720" width="300px">
-</p>
+| 메인 | 메인(반응형) | 사진 목록 | 사진 상세 |
+|------|--------------|-----------|-----------|
+| <img src="https://github.com/user-attachments/assets/e360e432-7c2a-4ed5-aabc-176f6021c555" width="250px"> | <img src="https://github.com/user-attachments/assets/cd24b03b-4dab-4ac2-88c2-d5923c179720" width="250px"> | <img src="https://github.com/user-attachments/assets/9356f246-9eba-42ef-9f94-e202d44105d6" width="250px"> | <img src="https://github.com/user-attachments/assets/910cfb63-67b1-4214-ab28-5ebef2e45f99" width="250px"> |
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/9356f246-9eba-42ef-9f94-e202d44105d6" width="300px">
-</p>
-
-<p align="center">
-    <img src="https://github.com/user-attachments/assets/910cfb63-67b1-4214-ab28-5ebef2e45f99" width="300px">
-</p>
-
-<p align="center">
-    <img src="https://github.com/user-attachments/assets/8c0c4d87-7928-4583-b62e-97a87cd701f6" width="300px">
-</p>
-
-
-<p align="center">
-    <img src="https://github.com/user-attachments/assets/32e5041f-87d4-4155-b2d5-070a98c486cb" width="300px">
-</p>
-
-
-<p align="center">
-    <img src="https://github.com/user-attachments/assets/dafa9c55-c7dd-48ea-9fe1-199980df6575" width="300px">
-</p>
-
-
-<p align="center">
-    <img src="https://github.com/user-attachments/assets/2405a65d-30c7-4655-9537-dd0e56f58176" width="300px">
-</p>
+| 사진 상세(댓글) | 사진 등록 | 관리자 (권한) | 관리자 (회원가입) |
+|----------------|-----------|---------------|------------------|
+| <img src="https://github.com/user-attachments/assets/8c0c4d87-7928-4583-b62e-97a87cd701f6" width="250px"> | <img src="https://github.com/user-attachments/assets/32e5041f-87d4-4155-b2d5-070a98c486cb" width="250px"> | <img src="https://github.com/user-attachments/assets/dafa9c55-c7dd-48ea-9fe1-199980df6575" width="250px"> | <img src="https://github.com/user-attachments/assets/2405a65d-30c7-4655-9537-dd0e56f58176" width="250px"> |
 
 ### 문제 해결
 
