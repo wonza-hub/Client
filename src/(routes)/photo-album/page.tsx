@@ -2,14 +2,13 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Masonry from 'react-masonry-css';
 import { Flex } from '@chakra-ui/react';
-import { useInfiniteQuery } from '@tanstack/react-query';
 import { useInView } from 'react-intersection-observer';
 import Skeleton from '@mui/material/Skeleton';
 import Box from '@mui/material/Box';
 import PhotoAlbumThumbnail from './_components/PhotoAlbumThumbnail';
 import LoadingSpinner from '../../_components/loadingSpinner/LoadingSpinner';
 import { IPhotoAlbumMetaData } from './types';
-import getNextPhotoAlbums from './_lib/getNextPhotoAlbums';
+import useInfinitePhotoAlbumData from './_hooks/useInfinitePhotoAlbumData';
 
 // Masonary 레이아웃 열 갯수 (반응형)
 const breakpointColumnsObj = {
@@ -29,18 +28,7 @@ export default function Page() {
         fetchNextPage,
         hasNextPage,
         isFetchingNextPage,
-    } = useInfiniteQuery({
-        queryKey: ['album'],
-        queryFn: getNextPhotoAlbums,
-        // page 파라미터 초기값
-        initialPageParam: 1,
-        // lastPage: 마지막에 불러온 한 페이지 내 배열, allPages: 현재까지 불러온 총페이지 배열
-        getNextPageParam: (lastPage, allPages) => (lastPage.length ? allPages.length + 1 : undefined),
-        retry: false,
-        refetchOnWindowFocus: false,
-        gcTime: 0,
-        throwOnError: true,
-    });
+    } = useInfinitePhotoAlbumData();
 
     // ref가 inView 영역에 도달하면 다음 페이지를 불러옴
     useEffect(() => {
